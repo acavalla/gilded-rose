@@ -48,10 +48,10 @@ describe Bank do
       subject.transaction(amount, date)
       expect(subject.statement).to eq "#{date} || #{amount} || || #{subject.balance}"
     end
-    # 
-    # it 'returns multiple transactions with line break' do
-    #   # 2.times { subject.transaction(amount, date) }
-    #   expect(subject.statement).to eq "#{date} || #{amount} || || #{subject.balance}"
-    # end
+
+    it 'returns multiple transactions with line break' do
+      2.times { subject.transaction(amount, date) }
+      expect(subject.statement).to eq "#{date} || #{amount} || || #{subject.balance}\n#{date} || #{amount} || || #{subject.balance}"
+    end
   end
 end

@@ -11,11 +11,11 @@ class Bank
   end
 
   def statement
-    str = ""
+    str = []
     @transactions.each do |transaction|
-      str = str + "#{transaction.details["date"]} || #{transaction.details["amount"]} || || #{@balance}"
+      str << "#{transaction.details["date"]} || #{transaction.details["amount"]} || || #{@balance}"
     end
-    return str
+    return str.join("\n")
   end
 
   def print_statement
