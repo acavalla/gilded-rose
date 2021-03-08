@@ -6,17 +6,17 @@ class Bank
   end
 
   def transaction(amount, date)
-    new_transaction(amount, date)
     adjust_balance(amount)
+    new_transaction(amount, date)
   end
 
   def statement
     str = []
     @transactions.reverse_each do |transaction|
       if transaction.details["amount"] > 0
-        str << "#{transaction.details["date"]} || #{transaction.details["amount"]} || || #{@balance}"
+        str << "#{transaction.details["date"]} || #{transaction.details["amount"]} || || #{transaction.details["current_balance"]}"
       else
-        str << "#{transaction.details["date"]} || || #{transaction.details["amount"]} || #{@balance}"
+        str << "#{transaction.details["date"]} || || #{transaction.details["amount"]} || #{transaction.details["current_balance"]}"
       end
     end
     return str.join("\n")
@@ -33,6 +33,6 @@ class Bank
   end
 
   def new_transaction(amount, date)
-    @transactions << Transaction.new(amount, date)
+    @transactions << Transaction.new(amount, date, @balance)
   end
 end

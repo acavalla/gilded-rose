@@ -4,7 +4,9 @@ describe Bank do
   let(:amount) { 120 }
   let(:negative_amount) { -120 }
   let(:date) { "11.03.2020" }
-  let(:transaction) { { "amount" => amount, "date" => date } }
+  let(:current_balance) { 230 }
+  let(:transaction) { double('transaction') }
+  let(:transaction_hash) { { "amount" => amount, "date" => date, "current_balance" => current_balance } }
 
   describe '#transaction' do
     before :each do
@@ -21,7 +23,9 @@ describe Bank do
 
     it "stores the amount and date in transactions array" do
       subject.transaction(amount, date)
-      expect(subject.transactions[-1]["amount"]).to eq amount
+      allow(transaction).to receive(:details).and_return(transaction_hash)
+      expect(subject.transactions[-1].details["amount"]).to eq amount
+      expect(subject.transactions[-1].details["date"]).to eq date
       expect(subject.transactions.length).to eq 1
     end
 
@@ -33,9 +37,9 @@ describe Bank do
 
   describe '#print_statement' do
     before :each do
-      # allow(subject).to receive(:new_transaction).with(amount, date) do
-      #   subject.transactions << transaction
-      # end
+      allow(subject).to receive(:new_transaction).with(amount, date) do
+        subject.transactions << transaction
+      end
     end
 
     it 'prints out something' do
@@ -45,25 +49,23 @@ describe Bank do
   end
 
   describe '#statement' do
+    before :each do
+      allow(subject).to receive(:new_transaction).with(amount, date) do
+        subject.transactions << transaction
+      end
+      allow(transaction).to receive(:details).and_return(transaction_hash)
+    end
+
     it 'returns one transaction' do
       subject.transaction(amount, date)
-      expect(subject.statement).to eq "#{date} || #{amount} || || #{subject.balance}"
+      expect(subject.statement).to eq "#{date} || #{amount} || || #{transaction.details["current_balance"]}"
     end
 
     it 'returns multiple transactions with line break' do
       2.times { subject.transaction(amount, date) }
-      expect(subject.statement).to eq "#{date} || #{amount} || || #{subject.balance}\n#{date} || #{amount} || || #{subject.balance}"
+      expect(subject.statement).to eq "#{date} || #{amount} || || #{transaction.details["current_balance"]}\n#{date} || #{amount} || || #{transaction.details["current_balance"]}"
     end
 
-    it 'can handle withdrawals' do
-      subject.transaction(negative_amount, date)
-      expect(subject.statement).to eq "#{date} || || #{negative_amount} || #{subject.balance}"
-    end
-
-    it 'goes in reverse order' do
-      subject.transaction(amount, date)
-      subject.transaction(negative_amount, date)
-      expect(subject.statement).to eq "#{date} || || #{negative_amount} || #{subject.balance}\n#{date} || #{amount} || || #{subject.balance}"
-    end
   end
+
 end
