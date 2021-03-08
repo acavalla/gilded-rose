@@ -2,6 +2,7 @@ require 'bank'
 
 describe Bank do
   let(:amount) { 120 }
+  let(:negative_amount) { -120 }
   let(:date) { "11.03.2020" }
   let(:transaction) { { "amount" => amount, "date" => date } }
 
@@ -52,6 +53,11 @@ describe Bank do
     it 'returns multiple transactions with line break' do
       2.times { subject.transaction(amount, date) }
       expect(subject.statement).to eq "#{date} || #{amount} || || #{subject.balance}\n#{date} || #{amount} || || #{subject.balance}"
+    end
+
+    it 'can handle withdrawals' do
+      subject.transaction(negative_amount, date)
+      expect(subject.statement).to eq "#{date} || || #{negative_amount} || #{subject.balance}"
     end
   end
 end

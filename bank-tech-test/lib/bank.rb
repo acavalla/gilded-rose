@@ -13,7 +13,11 @@ class Bank
   def statement
     str = []
     @transactions.each do |transaction|
-      str << "#{transaction.details["date"]} || #{transaction.details["amount"]} || || #{@balance}"
+      if transaction.details["amount"] > 0
+        str << "#{transaction.details["date"]} || #{transaction.details["amount"]} || || #{@balance}"
+      else
+        str << "#{transaction.details["date"]} || || #{transaction.details["amount"]} || #{@balance}"
+      end
     end
     return str.join("\n")
   end
