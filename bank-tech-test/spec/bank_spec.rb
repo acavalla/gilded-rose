@@ -59,5 +59,11 @@ describe Bank do
       subject.transaction(negative_amount, date)
       expect(subject.statement).to eq "#{date} || || #{negative_amount} || #{subject.balance}"
     end
+
+    it 'goes in reverse order' do
+      subject.transaction(amount, date)
+      subject.transaction(negative_amount, date)
+      expect(subject.statement).to eq "#{date} || || #{negative_amount} || #{subject.balance}\n#{date} || #{amount} || || #{subject.balance}"
+    end
   end
 end
