@@ -1,7 +1,7 @@
 class Transaction
-  attr_reader :amount, :date
+  attr_reader :details
   def initialize(amount, date)
-    @amount = amount
-    @date = date
+    @details = {"amount" => amount,
+               "date" => date}
   end
 end
