@@ -5,6 +5,6 @@ class Bank
   end
 
   def deposit(amount, date)
-    @deposits << Deposit.new
+    @deposits << Deposit.new(amount, date)
   end
 end
