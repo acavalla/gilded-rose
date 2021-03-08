@@ -33,7 +33,11 @@ describe Bank do
   describe '#statement' do
     it 'prints out something' do
       expect(subject).to receive(:puts)
-      subject.statement
+      subject.print_statement
+    end
+
+    it 'prints the top level of the table' do
+      expect(subject.statement).to eq "date || credit || debit || balance"
     end
   end
 end

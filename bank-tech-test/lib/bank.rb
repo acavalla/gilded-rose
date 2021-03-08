@@ -11,7 +11,11 @@ class Bank
   end
 
   def statement
-    puts "Hi"
+    return "date || credit || debit || balance"
+  end
+
+  def print_statement
+    puts statement
   end
 
   private
