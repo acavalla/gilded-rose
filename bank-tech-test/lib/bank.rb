@@ -1,10 +1,12 @@
 class Bank
-  attr_reader :deposits
+  attr_reader :deposits, :balance
   def initialize
     @deposits = []
+    @balance = 0
   end
 
-  def deposit(amount, date)
+  def add_deposit(amount, date)
     @deposits << Deposit.new(amount, date)
+    @balance += amount
   end
 end

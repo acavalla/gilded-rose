@@ -8,5 +8,4 @@ describe Deposit do
       expect(deposit.date). to eq "13.01.2020"
     end
   end
-
 end
