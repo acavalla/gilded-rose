@@ -40,4 +40,14 @@ Once you have completed the challenge and feel happy with your solution, here's 
 
 Class: BankAccount
 Methods: deposit [creates Deposit class], withdraw [creates Withdraw class], statement
-Instance variable: balance, withdrawals (array of Withdrawal class), deposits (array of Deposit class)
+Instance variables: balance, withdrawals (array of Withdrawal class), deposits (array of Deposit class)
+
+Class: Deposit
+Keeps track of deposit amounts and dates
+Methods: initialize, self.all
+Instance variables: amount, date
+
+Class: Withdrawal
+Keeps track of withdrawal amounts and dates
+Methods: initialize, self.all
+Instance variables: amount, date
