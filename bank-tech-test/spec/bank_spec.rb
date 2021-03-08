@@ -7,7 +7,7 @@ describe Bank do
 
   describe '#transaction' do
     before :each do
-      allow(subject).to receive(:new_transaction).with(amount, date) do subject.transactions << transaction end
+      #allow(subject).to receive(:new_transaction).with(amount, date) do subject.transactions << transaction end
     end
 
     it "stores the amount and date in transactions array" do
