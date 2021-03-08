@@ -10,6 +10,10 @@ class Bank
     adjust_balance(amount)
   end
 
+  def statement
+    puts "Hi"
+  end
+
   private
 
   def adjust_balance(amount)
