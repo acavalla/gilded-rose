@@ -1,4 +1,4 @@
-class Withdrawal
+class Transaction
   attr_reader :amount, :date
   def initialize(amount, date)
     @amount = amount
