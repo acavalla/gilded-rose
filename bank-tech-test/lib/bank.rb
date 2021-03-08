@@ -6,7 +6,15 @@ class Bank
   end
 
   def add_deposit(amount, date)
-    @deposits << Deposit.new(amount, date)
+    new_deposit(amount, date)
+    adjust_balance(amount)
+  end
+
+  def adjust_balance(amount)
     @balance += amount
+  end
+
+  def new_deposit(amount, date)
+    @deposits << Deposit.new(amount, date)
   end
 end
