@@ -23,7 +23,7 @@ class Bank
   end
 
   def print_statement
-    puts "date || credit || debit || balance" + statement
+    puts "date || credit || debit || balance" + (statement.length == 0 ? "" : "\n" + statement)
   end
 
   private
