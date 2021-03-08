@@ -39,15 +39,10 @@ Once you have completed the challenge and feel happy with your solution, here's 
 ## Planning
 
 Class: BankAccount
-Methods: deposit [creates Deposit class], withdraw [creates Withdraw class], statement
-Instance variables: balance, withdrawals (array of Withdrawal class), deposits (array of Deposit class)
+Methods: transaction [create Transaction class], statement
+Instance variables: balance, transactions (array of Transaction class)
 
-Class: Deposit
-Keeps track of deposit amounts and dates
+Class: Transaction
+Keeps track of transaction types, amounts and dates
 Methods: initialize, self.all
-Instance variables: amount, date
-
-Class: Withdrawal
-Keeps track of withdrawal amounts and dates
-Methods: initialize, self.all
-Instance variables: amount, date
+Instance variables: type, amount, date
