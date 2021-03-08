@@ -11,11 +11,15 @@ class Bank
   end
 
   def statement
-    return "date || credit || debit || balance"
+    str = ""
+    @transactions.each do |transaction|
+      str = str + "#{transaction.details["date"]} || #{transaction.details["amount"]} || || #{@balance}"
+    end
+    return str
   end
 
   def print_statement
-    puts statement
+    puts "date || credit || debit || balance" + statement
   end
 
   private

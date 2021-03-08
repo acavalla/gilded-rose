@@ -30,14 +30,28 @@ describe Bank do
     end
   end
 
-  describe '#statement' do
-    it 'prints out something' do
-      expect(subject).to receive(:puts)
-      subject.print_statement
+  describe '#print_statement' do
+    before :each do
+      # allow(subject).to receive(:new_transaction).with(amount, date) do
+      #   subject.transactions << transaction
+      # end
     end
 
-    it 'prints the top level of the table' do
-      expect(subject.statement).to eq "date || credit || debit || balance"
+    it 'prints out something' do
+      expect(subject).to receive(:puts).with("date || credit || debit || balance")
+      subject.print_statement
     end
+  end
+
+  describe '#statement' do
+    it 'returns one transaction' do
+      subject.transaction(amount, date)
+      expect(subject.statement).to eq "#{date} || #{amount} || || #{subject.balance}"
+    end
+    # 
+    # it 'returns multiple transactions with line break' do
+    #   # 2.times { subject.transaction(amount, date) }
+    #   expect(subject.statement).to eq "#{date} || #{amount} || || #{subject.balance}"
+    # end
   end
 end
