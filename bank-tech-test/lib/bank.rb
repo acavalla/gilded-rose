@@ -27,10 +27,10 @@ class Bank
     str.join("\n")
   end
 
-  def print_statement
-    puts 'date || credit || debit || balance' +
-         (statement.empty? ? '' : "\n" + statement)
-  end
+  # def print_statement
+  #   puts 'date || credit || debit || balance' +
+  #        (statement.empty? ? '' : "\n" + statement)
+  # end
 
   private
 

@@ -48,12 +48,12 @@ describe Bank do
     end
   end
 
-  describe '#print_statement' do
-    it 'prints out something' do
-      expect(subject).to receive(:puts).with('date || credit || debit || balance')
-      subject.print_statement
-    end
-  end
+  # describe '#print_statement' do
+  #   it 'prints out something' do
+  #     expect(subject).to receive(:puts).with('date || credit || debit || balance')
+  #     subject.print_statement
+  #   end
+  # end
 
   describe '#statement' do
     before :each do

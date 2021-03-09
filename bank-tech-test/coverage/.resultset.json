@@ -53,10 +53,10 @@
           null,
           null,
           null,
-          1,
-          1,
-          1,
-          1,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null,
@@ -91,8 +91,8 @@
           1,
           null,
           1,
-          9,
-          9,
+          8,
+          8,
           null,
           null,
           1,
@@ -101,20 +101,20 @@
           null,
           null,
           1,
-          5,
-          5,
+          4,
+          4,
           6,
           4,
           null,
           2,
           null,
           null,
-          5,
+          4,
           null,
           null,
-          1,
-          1,
-          1,
+          null,
+          null,
+          null,
           null,
           null,
           1,
@@ -191,6 +191,31 @@
           null
         ]
       },
+      "/Users/annie/MakersProjs/10-week/bank-tech-test/spec/statement_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/annie/MakersProjs/10-week/bank-tech-test/lib/statement.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
       "/Users/annie/MakersProjs/10-week/bank-tech-test/spec/transaction_spec.rb": {
         "lines": [
           1,
@@ -208,6 +233,6 @@
         ]
       }
     },
-    "timestamp": 1615300872
+    "timestamp": 1615301371
   }
 }
