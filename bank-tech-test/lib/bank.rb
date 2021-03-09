@@ -1,5 +1,10 @@
+# frozen_string_literal: true
+
+require_relative 'transaction'
+# This class initializes with a balance and a transactions array
 class Bank
   attr_reader :balance, :transactions
+
   def initialize
     @balance = 0
     @transactions = []
@@ -12,22 +17,23 @@ class Bank
 
   def statement
     str = []
-    transactions.reverse_each do |t|
-      if t.details["amount"].positive?
-        str << deposit(t)
-      else
-        str << withdrawal(t)
-      end
+    transactions.reverse_each do |transaction|
+      str << if transaction.details['amount'].positive?
+               deposit(transaction)
+             else
+               withdrawal(transaction)
+             end
     end
-    return str.join("\n")
+    str.join("\n")
   end
 
   def print_statement
-    puts "date || credit || debit || balance" +
-      (statement.length == 0 ? "" : "\n" + statement)
+    puts 'date || credit || debit || balance' +
+         (statement.empty? ? '' : "\n" + statement)
   end
 
   private
+
   attr_writer :balance
 
   def adjust_balance(amount)
@@ -38,15 +44,15 @@ class Bank
     transactions << Transaction.new(amount, date, balance)
   end
 
-  def withdrawal(t)
-    "#{t.details["date"]} || || "\
-    "#{-t.details["amount"]} || "\
-    "#{t.details["current_balance"]}"
+  def withdrawal(transaction)
+    "#{transaction.details['date']} || || "\
+    "#{-transaction.details['amount']} || "\
+    "#{transaction.details['current_balance']}"
   end
 
-  def deposit(t)
-    "#{t.details["date"]} || "\
-    "#{t.details["amount"]} || || "\
-    "#{t.details["current_balance"]}"
+  def deposit(transaction)
+    "#{transaction.details['date']} || "\
+    "#{transaction.details['amount']} || || "\
+    "#{transaction.details['current_balance']}"
   end
 end
