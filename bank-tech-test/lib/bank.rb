@@ -12,7 +12,7 @@ class Bank
 
   def statement
     str = []
-    @transactions.reverse_each do |t|
+    transactions.reverse_each do |t|
       if t.details["amount"].positive?
         str << deposit(t)
       else
@@ -28,13 +28,14 @@ class Bank
   end
 
   private
+  attr_writer :balance
 
   def adjust_balance(amount)
-    @balance += amount
+    self.balance += amount
   end
 
   def new_transaction(amount, date)
-    @transactions << Transaction.new(amount, date, @balance)
+    transactions << Transaction.new(amount, date, balance)
   end
 
   def withdrawal(t)
