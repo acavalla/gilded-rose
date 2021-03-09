@@ -36,11 +36,11 @@ describe Bank do
   end
 
   describe '#print_statement' do
-    before :each do
-      allow(subject).to receive(:new_transaction).with(amount, date) do
-        subject.transactions << transaction
-      end
-    end
+    # before :each do
+    #   allow(subject).to receive(:new_transaction).with(amount, date) do
+    #     subject.transactions << transaction
+    #   end
+    # end
 
     it 'prints out something' do
       expect(subject).to receive(:puts).with("date || credit || debit || balance")

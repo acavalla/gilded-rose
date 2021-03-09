@@ -24,7 +24,7 @@ describe "features" do
     it 'can handle withdrawals' do
       bank = Bank.new
       bank.transaction(-amount, date)
-      expect(bank.statement).to eq "#{date} || || #{-amount} || #{bank.balance}"
+      expect(bank.statement).to eq "#{date} || || #{amount} || #{bank.balance}"
     end
 
     it 'goes in reverse order' do
@@ -33,7 +33,7 @@ describe "features" do
       bank.transaction(-amount, date)
       transaction1 = bank.transactions[0]
       transaction2 = bank.transactions[1]
-      expect(bank.statement).to eq "#{date} || || #{-amount} || #{transaction2.details["current_balance"]}\n#{date} || #{amount} || || #{transaction1.details["current_balance"]}"
+      expect(bank.statement).to eq "#{date} || || #{amount} || #{transaction2.details["current_balance"]}\n#{date} || #{amount} || || #{transaction1.details["current_balance"]}"
     end
   end
 

@@ -12,11 +12,11 @@ class Bank
 
   def statement
     str = []
-    @transactions.reverse_each do |transaction|
-      if transaction.details["amount"] > 0
-        str << "#{transaction.details["date"]} || #{transaction.details["amount"]} || || #{transaction.details["current_balance"]}"
+    @transactions.reverse_each do |t|
+      if t.details["amount"] > 0
+        str << "#{t.details["date"]} || #{t.details["amount"]} || || #{t.details["current_balance"]}"
       else
-        str << "#{transaction.details["date"]} || || #{transaction.details["amount"]} || #{transaction.details["current_balance"]}"
+        str << "#{t.details["date"]} || || #{-t.details["amount"]} || #{t.details["current_balance"]}"
       end
     end
     return str.join("\n")
