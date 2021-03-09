@@ -2,9 +2,9 @@
 
 This is a mock tech test for week 10 of Maker's Academy. I took a day and a half to build two classes, of which Bank is the dependant, and Transaction the dependency. The trade-off of the dependency introduced by an extra class was to adhere better to the SRP. It made it more complicated as I had to add mocks to inject dependency, but it was a good opportunity to practise my mocking skills.
 
-The rough planning can be seen at the bottom of the readme, and its progress tracked through the commits. I originally planned to have two separate classes for Deposit and Withdrawal, but when I built them out I noticed they were mirroring one another, so to keep things dry I combined them into one with one area of conditional code to decide which column (credit/debit) the transaction should go in.
+The rough planning can be seen at the bottom of the readme, and its progress tracked through the commits. I originally planned to have two separate classes for Deposit and Withdrawal, but when I built them out I noticed they were mirroring one another, so to keep things dry I combined them into one and just added a conditional to decide which column (credit/debit) the transaction should go in.
 
-In its current iteration, the date and amount are input manually, and in fact will accept any data, which could be improved. Additionally, I think a further Statement class might be better to reduce some of the code in the Bank class and spec (Rubocop is very unhappy with the length of my `describe Bank do` block!). This is an ethical bank which will let you overdraw yourself to an unlimited amount and never charge you any fees, because being poor is not a good reason to fine someone.
+In its current iteration, the date and amount are input manually, and in fact will accept any data, which could be improved. This is an ethical bank which will let you overdraw yourself to an unlimited amount and never charge you any fees, because their being poor is not a good reason to fine someone.
 
 To run this code, please clone the repo; `rspec` will run the test suite.
 Please see below for irb demonstration and plans.
