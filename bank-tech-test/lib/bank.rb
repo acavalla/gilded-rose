@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 require_relative 'transaction'
+require_relative 'statement'
 # This class initializes with a balance and a transactions array
 class Bank
-  attr_reader :balance, :transactions
+  attr_reader :balance, :transactions, :statement
 
   def initialize
     @balance = 0
     @transactions = []
+    # @statements = []
   end
 
   def transaction(amount, date)
@@ -15,22 +17,10 @@ class Bank
     new_transaction(amount, date)
   end
 
-  def statement
-    str = []
-    transactions.reverse_each do |transaction|
-      str << if transaction.details['amount'].positive?
-               deposit(transaction)
-             else
-               withdrawal(transaction)
-             end
-    end
-    str.join("\n")
+  def create_statement
+    @statement = Statement.new(@transactions)
+    statement.print
   end
-
-  # def print_statement
-  #   puts 'date || credit || debit || balance' +
-  #        (statement.empty? ? '' : "\n" + statement)
-  # end
 
   private
 
@@ -42,17 +32,5 @@ class Bank
 
   def new_transaction(amount, date)
     transactions << Transaction.new(amount, date, balance)
-  end
-
-  def withdrawal(transaction)
-    "#{transaction.details['date']} || || "\
-    "#{-transaction.details['amount']} || "\
-    "#{transaction.details['current_balance']}"
-  end
-
-  def deposit(transaction)
-    "#{transaction.details['date']} || "\
-    "#{transaction.details['amount']} || || "\
-    "#{transaction.details['current_balance']}"
   end
 end

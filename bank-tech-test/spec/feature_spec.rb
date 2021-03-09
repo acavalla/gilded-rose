@@ -5,24 +5,21 @@ require 'bank'
 describe 'features' do
   let(:amount) { 120 }
   let(:date) { '11.03.2020' }
-
+  let(:bank) { Bank.new }
   describe 'sequential transactions' do
     it 'has correct maths' do
-      bank = Bank.new
-      bank.transaction(amount, date)
-      bank.transaction(amount, date)
+      2.times { bank.transaction(amount, date) }
       t1 = bank.transactions[0]
       t2 = bank.transactions[1]
       expect(t2.details['current_balance']).to eq t1.details['current_balance'] + amount
     end
+  end
 
-    it 'goes in reverse order' do
-      bank = Bank.new
+  describe 'trio working' do
+    it 'is called on initializing' do
       bank.transaction(amount, date)
-      bank.transaction(-amount, date)
-      t1 = bank.transactions[0]
-      t2 = bank.transactions[1]
-      expect(bank.statement).to eq "#{date} || || #{amount} || #{t2.details['current_balance']}\n#{date} || #{amount} || || #{t1.details['current_balance']}"
+      expect($stdout).to receive(:puts).with("date || credit || debit || balance\n#{date} || #{amount} || || #{amount}")
+      bank.create_statement
     end
   end
 end

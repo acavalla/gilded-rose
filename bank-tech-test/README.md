@@ -49,21 +49,17 @@ Methods: initialize
 Instance variables: details hash { amount, date, balance }
 
 ## irb
-```2.7.2 :009 > bank = Bank.new
- => #<Bank:0x00007fc39532e5f0 @balance=0, @transactions=[]>
-2.7.2 :010 > bank.transaction(100, "01.01.2000")
- => [#<Transaction:0x00007fc3952ce5d8 @details={"amount"=>100, "date"=>"01.01.2000", "current_
-balance"=>100}>]
-2.7.2 :011 > bank.transaction(1000, "03.01.2000")
- => [#<Transaction:0x00007fc3952ce5d8 @details={"amount"=>100, "date"=>"01.01.2000", "current_
-balance"=>100}>, #<Transaction:0x00007fc3952e4b08 @details={"amount"=>1000, "date"=>"03.01.200
+```2.7.2 :001 > bank = Bank.new
+ => #<Bank:0x00007fc65b9c25d8 @balance=0, @transactions=[]>
+2.7.2 :002 > bank.transaction(100, "01.01.2000")
+ => [#<Transaction:0x00007fc65b8e4ad0 @details={"amount"=>100, "date"=>"01.01.2000", "current_balance"=>100}>]
+2.7.2 :003 > bank.transaction(1000, "03.01.2000")
+ => [#<Transaction:0x00007fc65b8e4ad0 @details={"amount"=>100, "date"=>"01.01.2000", "current_balance"=>100}>, #<Transaction:0x00007fc65b9903f8 @details={"amount"=>1000, "date"=>"03.01.200
 0", "current_balance"=>1100}>]
-2.7.2 :012 > bank.transaction(-675, "04.01.2000")
- => [#<Transaction:0x00007fc3952ce5d8 @details={"amount"=>100, "date"=>"01.01.2000", "current_
-balance"=>100}>, #<Transaction:0x00007fc3952e4b08 @details={"amount"=>1000, "date"=>"03.01.200
-0", "current_balance"=>1100}>, #<Transaction:0x00007fc3952f49b8 @details={"amount"=>-675, "dat
-e"=>"04.01.2000", "current_balance"=>425}>]
-2.7.2 :013 > bank.print_statement
+2.7.2 :004 > bank.transaction(-675, "04.01.2000")
+ => [#<Transaction:0x00007fc65b8e4ad0 @details={"amount"=>100, "date"=>"01.01.2000", "current_balance"=>100}>, #<Transaction:0x00007fc65b9903f8 @details={"amount"=>1000, "date"=>"03.01.200
+0", "current_balance"=>1100}>, #<Transaction:0x00007fc65b999408 @details={"amount"=>-675, "date"=>"04.01.2000", "current_balance"=>425}>]
+2.7.2 :005 > bank.create_statement
 date || credit || debit || balance
 04.01.2000 || || 675 || 425
 03.01.2000 || 1000 || || 1100
