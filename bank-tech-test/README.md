@@ -49,7 +49,8 @@ Methods: initialize
 Instance variables: details hash { amount, date, balance }
 
 ## irb
-```2.7.2 :001 > bank = Bank.new
+```$ irb -r "./lib/bank"
+2.7.2 :001 > bank = Bank.new
  => #<Bank:0x00007fc65b9c25d8 @balance=0, @transactions=[]>
 2.7.2 :002 > bank.transaction(100, "01.01.2000")
  => [#<Transaction:0x00007fc65b8e4ad0 @details={"amount"=>100, "date"=>"01.01.2000", "current_balance"=>100}>]
