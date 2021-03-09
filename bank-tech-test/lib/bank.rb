@@ -13,17 +13,18 @@ class Bank
   def statement
     str = []
     @transactions.reverse_each do |t|
-      if t.details["amount"] > 0
-        str << "#{t.details["date"]} || #{t.details["amount"]} || || #{t.details["current_balance"]}"
+      if t.details["amount"].positive?
+        str << deposit(t)
       else
-        str << "#{t.details["date"]} || || #{-t.details["amount"]} || #{t.details["current_balance"]}"
+        str << withdrawal(t)
       end
     end
     return str.join("\n")
   end
 
   def print_statement
-    puts "date || credit || debit || balance" + (statement.length == 0 ? "" : "\n" + statement)
+    puts "date || credit || debit || balance" +
+      (statement.length == 0 ? "" : "\n" + statement)
   end
 
   private
@@ -34,5 +35,17 @@ class Bank
 
   def new_transaction(amount, date)
     @transactions << Transaction.new(amount, date, @balance)
+  end
+
+  def withdrawal(t)
+    "#{t.details["date"]} || || "\
+    "#{-t.details["amount"]} || "\
+    "#{t.details["current_balance"]}"
+  end
+
+  def deposit(t)
+    "#{t.details["date"]} || "\
+    "#{t.details["amount"]} || || "\
+    "#{t.details["current_balance"]}"
   end
 end

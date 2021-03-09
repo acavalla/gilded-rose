@@ -2,11 +2,11 @@ require 'bank'
 
 describe Bank do
   let(:amount) { 120 }
-  let(:negative_amount) { -120 }
   let(:date) { "11.03.2020" }
-  let(:current_balance) { 230 }
+  let(:current_balance) { -120 }
   let(:transaction) { double('transaction') }
-  let(:transaction_hash) { { "amount" => amount, "date" => date, "current_balance" => current_balance } }
+  let(:deposit_hash) { { "amount" => amount, "date" => date, "current_balance" => current_balance } }
+  let(:withdrawal_hash) { { "amount" => -amount, "date" => date, "current_balance" => current_balance } }
 
   describe '#transaction' do
     before :each do
@@ -23,7 +23,7 @@ describe Bank do
 
     it "stores the amount and date in transactions array" do
       subject.transaction(amount, date)
-      allow(transaction).to receive(:details).and_return(transaction_hash)
+      allow(transaction).to receive(:details).and_return(deposit_hash)
       expect(subject.transactions[-1].details["amount"]).to eq amount
       expect(subject.transactions[-1].details["date"]).to eq date
       expect(subject.transactions.length).to eq 1
@@ -32,6 +32,15 @@ describe Bank do
     it "changes the value of balance" do
       subject.transaction(amount, date)
       expect(subject.balance).to eq amount
+    end
+
+    it 'can handle withdrawals' do
+      allow(subject).to receive(:new_transaction).with(-amount, date) do
+        subject.transactions << transaction
+      end
+      subject.transaction(-amount, date)
+      allow(transaction).to receive(:details).and_return(withdrawal_hash)
+      expect(subject.statement).to eq "#{date} || || #{amount} || #{subject.balance}"
     end
   end
 
@@ -53,7 +62,7 @@ describe Bank do
       allow(subject).to receive(:new_transaction).with(amount, date) do
         subject.transactions << transaction
       end
-      allow(transaction).to receive(:details).and_return(transaction_hash)
+      allow(transaction).to receive(:details).and_return(deposit_hash)
     end
 
     it 'returns one transaction' do
