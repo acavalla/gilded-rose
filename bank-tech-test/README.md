@@ -1,12 +1,10 @@
 # Bank tech test
 
-Today, you'll practice doing a tech test.
+This is a mock tech test for week 10 of Maker's Academy. I took a day and a half to build two classes, of which Bank is the dependant, and Transaction the dependency. The trade-off of the dependency introduced by an extra class was to adhere better to the SRP. It made it more complicated as I had to add mocks to inject dependency, but it was a good opportunity to practise my mocking skills.
 
-For most tech tests, you'll essentially have unlimited time.  This practice session is about producing the best code you can when there is a minimal time pressure.
+The rough planning can be seen at the bottom of the readme, and its progress tracked through the commits. I originally planned to have two separate classes for Deposit and Withdrawal, but when I built them out I noticed they were mirroring one another, so to keep things dry I combined them into one with one area of conditional code to decide which column (credit/debit) the transaction should go in.
 
-You'll get to practise your OO design and TDD skills.
-
-You'll work alone, and you'll also review your own code so you can practice reflecting on and improving your own work.
+In its current iteration, the date and amount are input manually, and in fact will accept any data, which could be improved. Additionally, I think a further Statement class might be better to reduce some of the code in the Bank class and spec (Rubocop is very unhappy with the length of my `describe Bank do` block!). This is an ethical bank which will let you overdraw yourself to an unlimited amount and never charge you any fees, because being poor is not a good reason to fine someone. Please see below for irb demonstration and brief plans. 
 
 ## Specification
 
@@ -15,7 +13,7 @@ You'll work alone, and you'll also review your own code so you can practice refl
 * You should be able to interact with your code via a REPL like IRB or the JavaScript console.  (You don't need to implement a command line interface that takes input from STDIN.)
 * Deposits, withdrawal.
 * Account statement (date, amount, balance) printing.
-* Data can be kept in memory (it doesn't need to be stored to a database or anything).
+* Data can be kept in memory (it doesn't need to be stored in a database or anything).
 
 ### Acceptance criteria
 
@@ -38,11 +36,32 @@ Once you have completed the challenge and feel happy with your solution, here's 
 
 ## Planning
 
-Class: BankAccount
+Class: Bank
 Methods: transaction [create Transaction class], statement
-Instance variables: balance, transactions (array of Transaction class)
+Instance variables: balance, transactions [array of Transaction class]
 
 Class: Transaction
-Keeps track of transaction types, amounts and dates
-Methods: initialize, self.all
-Instance variables: type, amount, date
+Keeps track of amounts, date, current balance
+Methods: initialize
+Instance variables: details hash { amount, date, balance }
+
+## irb
+```2.7.2 :009 > bank = Bank.new
+ => #<Bank:0x00007fc39532e5f0 @balance=0, @transactions=[]>
+2.7.2 :010 > bank.transaction(100, "01.01.2000")
+ => [#<Transaction:0x00007fc3952ce5d8 @details={"amount"=>100, "date"=>"01.01.2000", "current_
+balance"=>100}>]
+2.7.2 :011 > bank.transaction(1000, "03.01.2000")
+ => [#<Transaction:0x00007fc3952ce5d8 @details={"amount"=>100, "date"=>"01.01.2000", "current_
+balance"=>100}>, #<Transaction:0x00007fc3952e4b08 @details={"amount"=>1000, "date"=>"03.01.200
+0", "current_balance"=>1100}>]
+2.7.2 :012 > bank.transaction(-675, "04.01.2000")
+ => [#<Transaction:0x00007fc3952ce5d8 @details={"amount"=>100, "date"=>"01.01.2000", "current_
+balance"=>100}>, #<Transaction:0x00007fc3952e4b08 @details={"amount"=>1000, "date"=>"03.01.200
+0", "current_balance"=>1100}>, #<Transaction:0x00007fc3952f49b8 @details={"amount"=>-675, "dat
+e"=>"04.01.2000", "current_balance"=>425}>]
+2.7.2 :013 > bank.print_statement
+date || credit || debit || balance
+04.01.2000 || || 675 || 425
+03.01.2000 || 1000 || || 1100
+01.01.2000 || 100 || || 100```
