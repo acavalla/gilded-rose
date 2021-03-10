@@ -36,7 +36,7 @@ Methods: initialize, update_quality
 
 pseudocode
 quality = Case: name
-            == sulfura?
+            =~ sulfura?
               80 # can set at beginning and never change
             == brie?
               brie
