@@ -1,10 +1,11 @@
 class GildedRose
+  attr_reader :items
   def initialize(items)
     @items = items
   end
 
   def update_quality
-    @items.each do |item|
+    self.items.each do |item|
       case item.name
       when "Sulfuras, Hand of Ragnaros"
       when "Aged Brie"
