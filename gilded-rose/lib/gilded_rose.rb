@@ -41,19 +41,19 @@ class GildedRose
   end
 
   def max?(item)
-    item.quality < MAXIMUM_QUALITY
+    item.quality == MAXIMUM_QUALITY
   end
 
   def min?(item)
-    item.quality > MINIMUM_QUALITY
+    item.quality == MINIMUM_QUALITY
   end
 
   def reduce_quality(item)
-    item.quality -= 1 if min?(item)
+    item.quality -= 1 unless min?(item)
   end
 
   def increase_quality(item)
-    item.quality += 1 if max?(item)
+    item.quality += 1 unless max?(item)
   end
 
   # def update_quality
