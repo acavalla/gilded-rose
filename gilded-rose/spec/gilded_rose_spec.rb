@@ -31,7 +31,9 @@ gilded_rose = GildedRose.new(items)
     end
 
     context "Aged Brie" do
-      it "increases quality daily" do
+      it "increases quality daily up to a max of 50" do
+        expect(items[2].quality).to eq 50
+        gilded_rose.update_quality([items[2]])
         expect(items[2].quality).to eq 50
       end
     end
@@ -46,18 +48,18 @@ gilded_rose = GildedRose.new(items)
       end
 
       it "quality +2 daily between 10-5 days" do
-        gilded_rose.update_quality
+        gilded_rose.update_quality([items[3]])
         expect(items[3].quality).to eq 3
       end
 
       it "quality +3 between 5-1 days" do
-        5.times { gilded_rose.update_quality }
+        5.times { gilded_rose.update_quality([items[3]]) }
         expect(items[3].sell_in).to eq 4
         expect(items[3].quality).to eq 13
       end
 
       it "quality 0 when sell_in is 0" do
-        5.times { gilded_rose.update_quality }
+        5.times { gilded_rose.update_quality([items[3]]) }
         expect(items[3].quality).to eq 0
       end
 
