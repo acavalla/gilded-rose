@@ -10,11 +10,15 @@ class GildedRose
       when "Aged Brie"
         item.quality += 1
       else
-        item.quality -= 1
-        item.sell_in -= 1
+        normal_protocol(item)
       end
     end
+  end
 
+  private
+  def normal_protocol(item)
+    item.quality -= 1
+    item.sell_in -= 1
   end
 
   # def update_quality
