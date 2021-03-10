@@ -5,10 +5,12 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
-      # case item.name
+      case item.name
+      when "Sulfuras, Hand of Ragnaros"
+      else
         item.quality -= 1
         item.sell_in -= 1
-      # end
+      end
     end
 
   end
