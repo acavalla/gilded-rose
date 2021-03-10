@@ -11,7 +11,7 @@ class GildedRose
       case item.name
       when "Sulfuras, Hand of Ragnaros"
       when "Aged Brie"
-        item.quality += 1 if max?(item)
+        increase_quality(item)
       when "Backstage passes to a TAFKAL80ETC concert"
         backstage_pass(item)
       else
@@ -30,11 +30,11 @@ class GildedRose
   def backstage_pass(item)
     case
     when item.sell_in > 10
-      item.quality += 1 if max?(item)
+      increase_quality(item)
     when item.sell_in > 5
-      item.quality += 2 if max?(item)
+      2.times { increase_quality(item) }
     when item.sell_in > 0
-      item.quality += 3 if max?(item)
+      3.times { increase_quality(item) }
     when item.sell_in = 0
       item.quality = 0
     end
@@ -50,6 +50,10 @@ class GildedRose
 
   def reduce_quality(item)
     item.quality -= 1 if min?(item)
+  end
+
+  def increase_quality(item)
+    item.quality += 1 if max?(item)
   end
 
   # def update_quality
