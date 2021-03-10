@@ -15,11 +15,7 @@ class GildedRose
       when "Backstage passes to a TAFKAL80ETC concert"
         backstage_pass(item)
       else
-        if item.sell_in > 0
-          reduce_quality(item)
-        else
-          2.times { reduce_quality(item) }
-        end
+        normal_protocol(item)
       end
     item.sell_in -= 1 if item.sell_in > 0
     end
@@ -37,6 +33,14 @@ class GildedRose
       3.times { increase_quality(item) }
     when item.sell_in = 0
       item.quality = 0
+    end
+  end
+
+  def normal_protocol(item)
+    if item.sell_in > 0
+      reduce_quality(item)
+    else
+      2.times { reduce_quality(item) }
     end
   end
 
