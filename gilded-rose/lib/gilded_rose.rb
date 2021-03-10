@@ -11,20 +11,26 @@ class GildedRose
       when "Aged Brie"
         item.quality += 1
       when "Backstage passes to a TAFKAL80ETC concert"
-        case
-        when item.sell_in > 10
-          item.quality += 1
-        when item.sell_in > 5
-          item.quality += 2
-        when item.sell_in > 0
-          item.quality += 2
-        when item.sell_in = 0
-          item.quality = 0
-        end
+        backstage_pass(item)
       else
         item.quality -= 1
       end
       item.sell_in -= 1
+    end
+  end
+
+  private
+
+  def backstage_pass(item)
+    case
+    when item.sell_in > 10
+      item.quality += 1
+    when item.sell_in > 5
+      item.quality += 2
+    when item.sell_in > 0
+      item.quality += 2
+    when item.sell_in = 0
+      item.quality = 0
     end
   end
 
