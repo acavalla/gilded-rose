@@ -10,16 +10,22 @@ class GildedRose
       when "Sulfuras, Hand of Ragnaros"
       when "Aged Brie"
         item.quality += 1
+      when "Backstage passes to a TAFKAL80ETC concert"
+        case
+        when item.sell_in > 10
+          item.quality += 1
+        when item.sell_in > 5
+          item.quality += 2
+        when item.sell_in > 0
+          item.quality += 2
+        when item.sell_in = 0
+          item.quality = 0
+        end
       else
-        normal_protocol(item)
+        item.quality -= 1
       end
+      item.sell_in -= 1
     end
-  end
-
-  private
-  def normal_protocol(item)
-    item.quality -= 1
-    item.sell_in -= 1
   end
 
   # def update_quality
