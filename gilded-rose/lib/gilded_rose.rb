@@ -16,9 +16,9 @@ class GildedRose
         backstage_pass(item)
       else
         if item.sell_in > 0
-          item.quality -= 1 if min?(item)
+          reduce_quality(item)
         else
-          item.quality -= 2 if min?(item)
+          2.times { reduce_quality(item) }
         end
       end
     item.sell_in -= 1 if item.sell_in > 0
@@ -46,6 +46,10 @@ class GildedRose
 
   def min?(item)
     item.quality > MINIMUM_QUALITY
+  end
+
+  def reduce_quality(item)
+    item.quality -= 1 if min?(item)
   end
 
   # def update_quality
