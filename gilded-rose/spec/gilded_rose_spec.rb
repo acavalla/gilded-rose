@@ -3,10 +3,11 @@ require 'gilded_rose'
 
 describe GildedRose do
 items = [Item.new("foo", 1, 2),
-         Item.new("Sulfuras, Hand of Ragnaros", 2, 80)]
+         Item.new("Sulfuras, Hand of Ragnaros", 2, 80),
+         Item.new("Aged Brie", 2, 49)]
 
   describe "#update_quality" do
-    before do
+    before :all do
       GildedRose.new(items).update_quality
     end
 
@@ -24,6 +25,12 @@ items = [Item.new("foo", 1, 2),
     context "Sulfura" do
       it "keeps quality of sulfura at 80" do
         expect(items[1].quality).to eq 80
+      end
+    end
+
+    context "Aged Brie" do
+      it "increases quality daily" do
+        expect(items[2].quality).to eq 50
       end
     end
 

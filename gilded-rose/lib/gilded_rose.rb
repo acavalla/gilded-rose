@@ -7,6 +7,8 @@ class GildedRose
     @items.each do |item|
       case item.name
       when "Sulfuras, Hand of Ragnaros"
+      when "Aged Brie"
+        item.quality += 1
       else
         item.quality -= 1
         item.sell_in -= 1
