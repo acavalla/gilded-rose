@@ -2,7 +2,7 @@
 require 'gilded_rose'
 
 describe GildedRose do
-items = [Item.new("foo", 1, 2),
+items = [Item.new("foo", 1, 1),
          Item.new("Sulfuras, Hand of Ragnaros", 2, 80),
          Item.new("Aged Brie", 2, 49),
          Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 0)]
@@ -15,7 +15,10 @@ gilded_rose = GildedRose.new(items)
 
     context "normal items" do
       it "alters quality and sell_in of normal items down by one" do
-        expect(items[0].quality).to eq 1
+        expect(items[0].quality).to eq 0
+        expect(items[0].sell_in).to eq 0
+        gilded_rose.update_quality([items[0]])
+        expect(items[0].quality).to eq 0
         expect(items[0].sell_in).to eq 0
       end
 
@@ -55,7 +58,7 @@ gilded_rose = GildedRose.new(items)
       it "quality +3 between 5-1 days" do
         5.times { gilded_rose.update_quality([items[3]]) }
         expect(items[3].sell_in).to eq 4
-        expect(items[3].quality).to eq 13
+        expect(items[3].quality).to eq 14
       end
 
       it "quality 0 when sell_in is 0" do
