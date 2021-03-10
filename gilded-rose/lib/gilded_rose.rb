@@ -1,5 +1,6 @@
 class GildedRose
   attr_reader :items
+  MAXIMUM_QUALITY = 50
   def initialize(items)
     @items = items
   end
@@ -9,7 +10,7 @@ class GildedRose
       case item.name
       when "Sulfuras, Hand of Ragnaros"
       when "Aged Brie"
-        item.quality += 1
+        item.quality += 1 if item.quality < 50
       when "Backstage passes to a TAFKAL80ETC concert"
         backstage_pass(item)
       else
