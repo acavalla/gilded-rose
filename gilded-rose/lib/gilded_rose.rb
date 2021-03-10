@@ -15,7 +15,11 @@ class GildedRose
       when "Backstage passes to a TAFKAL80ETC concert"
         backstage_pass(item)
       else
-        item.quality -= 1 if min?(item)
+        if item.sell_in > 0
+          item.quality -= 1 if min?(item)
+        else
+          item.quality -= 2 if min?(item)
+        end
       end
     item.sell_in -= 1 if item.sell_in > 0
     end

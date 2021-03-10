@@ -2,7 +2,7 @@
 require 'gilded_rose'
 
 describe GildedRose do
-items = [Item.new("foo", 1, 1),
+items = [Item.new("foo", 1, 3),
          Item.new("Sulfuras, Hand of Ragnaros", 2, 80),
          Item.new("Aged Brie", 2, 49),
          Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 0)]
@@ -15,6 +15,9 @@ gilded_rose = GildedRose.new(items)
 
     context "normal items" do
       it "alters quality and sell_in of normal items down by one" do
+        expect(items[0].quality).to eq 2
+        expect(items[0].sell_in).to eq 0
+        gilded_rose.update_quality([items[0]])
         expect(items[0].quality).to eq 0
         expect(items[0].sell_in).to eq 0
         gilded_rose.update_quality([items[0]])
