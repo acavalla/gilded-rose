@@ -12,7 +12,7 @@ class GildedRose
   MAXIMUM_QUALITY = 50
   def initialize(items)
     @items = items
-    # @normal_item = NormalItem.new
+    @normal_item = Inventory.new
     # @sulfura = Sulfura.new
     @aged_brie = AgedBrie.new
     @types = [@aged_brie]
@@ -36,7 +36,8 @@ class GildedRose
     elsif item.name.include?('Conjured')
       2.times { reduce_qual(item) }
     elsif !item.name.include?('Sulfura')
-      normal_protocol(item)
+      # normal_protocol(item)
+      @normal_item.normal_protocol(item)
     end
   end
 
