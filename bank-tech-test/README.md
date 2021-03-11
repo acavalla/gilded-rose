@@ -1,13 +1,28 @@
 # Bank tech test
 
-This is a mock tech test for week 10 of Maker's Academy. I took a day and a half to build two classes, of which Bank is the dependant, and Transaction the dependency. The trade-off of the dependency introduced by an extra class was to adhere better to the SRP. It made it more complicated as I had to add mocks to inject dependency, but it was a good opportunity to practise my mocking skills.
+This is a mock tech test for week 10 of Maker's Academy. I took a day and a half to build three classes, of which Bank is the dependant, and Transaction and Statement the dependencies. The trade-off benefit of the dependency introduced by the extra classes was to adhere better to the SRP. It made it more complicated as I had to add mocks to inject dependency, but it was a good opportunity to practise my mocking skills.
 
 The rough planning can be seen at the bottom of the readme, and its progress tracked through the commits. I originally planned to have two separate classes for Deposit and Withdrawal, but when I built them out I noticed they were mirroring one another, so to keep things dry I combined them into one and just added a conditional to decide which column (credit/debit) the transaction should go in.
 
-In its current iteration, the date and amount are input manually, and in fact will accept any data, which could be improved. This is an ethical bank which will let you overdraw yourself to an unlimited amount and never charge you any fees, because their being poor is not a good reason to fine someone.
+In its current iteration, the date and amount are input manually, and in fact will accept any data, which could be improved. This is an ethical bank which will let you overdraw yourself to an unlimited amount and never charge you any fees, because someone being poor is not a good reason to fine them.
 
 To run this code, please clone the repo; `rspec` will run the test suite.
 Please see below for irb demonstration and plans.
+
+**After coach review**
+Things to change/add:
+- change Rubocop
+- **.00**
+- Feature/unit test folders
+- Test withdrawal printing in statement or feature spec (fixes coverage to 100%)
+- Follow user stories in feature spec
+- **Autogenerate date / time, use strf, stub**
+- "You should be able to indirectly test in your bank_spec that the transactions are being added to the array of transactions (by testing the public methods that are interacting with the private method carrying this out). It looks as though you are doing this manually in your tests."
+- Remove commented out code
+- Take transaction data out of hash
+- "Storing both the balance and the amount is a duplication of code, and you can actually just include the latter in order to calculate the balance after each transaction at runtime of the print statement."
+- "In order to fully isolate your classes from one another, dependency injection is something that can employed here: specifically in def create_statement where @statement = Statement.new is being called directly in the method. You could pass in something like statement = Statement.new as a default argument, allowing for the passing in of a double instead of the real class while testing."
+- "The same can be done for Transaction.new in your new_transaction method, you could pass in the Transaction class itself in your initialise method as a default argument. This will allow for you to pass in a double instead while testing."
 
 ## Specification
 
