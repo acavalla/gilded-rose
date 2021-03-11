@@ -17,9 +17,9 @@ class GildedRose
     @aged_brie = AgedBrie.new
     @backstage_pass = BackstagePass.new
     @conjured = Conjured.new
-    @types = {"Aged Brie" => aged_brie,
-              "Backstage passes to a TAFKAL80ETC concert" => backstage_pass,
-              "Conjured Hand" => conjured}
+    @types = { 'Aged Brie' => aged_brie,
+               'Backstage passes to a TAFKAL80ETC concert' => backstage_pass,
+               'Conjured Hand' => conjured }
   end
 
   def update_quality(items = @items)

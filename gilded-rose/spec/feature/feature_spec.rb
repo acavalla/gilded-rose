@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'gilded_rose'
 
 describe 'feature' do
@@ -13,5 +15,4 @@ describe 'feature' do
       expect(items[2].quality).to eq 50
     end
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'backstage_pass'
 
 describe BackstagePass do

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Updates stats of regular items
 class Inventory
   MAXIMUM_QUALITY = 50
   MINIMUM_QUALITY = 0

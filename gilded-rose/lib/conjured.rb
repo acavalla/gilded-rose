@@ -1,5 +1,7 @@
-require_relative 'inventory'
+# frozen_string_literal: true
 
+require_relative 'inventory'
+# Updates stats of conjured items
 class Conjured < Inventory
   def update(item)
     2.times { update_qual(item) }

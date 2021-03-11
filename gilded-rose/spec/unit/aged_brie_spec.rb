@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'aged_brie'
 
 describe AgedBrie do

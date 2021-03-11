@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'inventory'
 
 describe Inventory do
