@@ -14,5 +14,10 @@ describe Inventory do
       expect(item.sell_in).to eq 0
       expect(item.quality).to eq 0
     end
+
+    it 'has a minimum of 0' do
+      subject.update(item)
+      expect(item.sell_in).to eq 0
+    end
   end
 end
