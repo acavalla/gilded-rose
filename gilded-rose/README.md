@@ -1,38 +1,33 @@
 ======================================
-# Gilded Rose Requirements Specification
+# Gilded Rose
 
+[specifications]("https://github.com/makersacademy/course/blob/master/individual_challenges/gilded_rose.md")
 
-Hi and welcome to team Gilded Rose. As you know, we are a small inn with a prime location in a
-prominent city ran by a friendly innkeeper named Allison. We also buy and sell only the finest goods.
-Unfortunately, our goods are constantly degrading in quality as they approach their sell by date. We
-have a system in place that updates our inventory for us. It was developed by a no-nonsense type named
-Leeroy, who has moved on to new adventures. Your task is to add the new feature to our system so that
-we can begin selling a new category of items. First an introduction to our system:
+This is my submission for the Gilded Rose tech test. You can see my planning in the planning markdown document. I started by listing all the issues I could initially see in the legacy code, however small, to remind me to come back to them if necessary. I diagrammed the domain by listing the classes and their attributes and methods, and diagrammed general inputs and outputs and conditions in a table. I then wrote a bit of pseudocode to get a feel for the overall structure of the update_quality method. I pulled out lots of bits of repeated code into small methods, eg to check min/max, to increase or reduce quality. I used `2.times { reduce_qual }` instead of `reduce_qual(-2)` to avoid an edge case of an item going from quality 1 to -1 and thereby 'skipping' fulfilling the `min?(item)` query.
 
-	- All items have a SellIn value which denotes the number of days we have to sell the item
-	- All items have a Quality value which denotes how valuable the item is
-	- At the end of each day our system lowers both values for every item
+I also changed the name queries to use the 'include' method to allow easier adding of further backstage passes or sulfura (I have no idea what this is, I have never played DnD but it seemed that sulfura was the category and Sulfuras: Foot of Ragnaros or whatever was the specific instance). After writing all these little methods it took me about 60 seconds to add the conjured category in to pass its tests (although obviously as the author I am biased).
 
-Pretty simple, right? Well this is where it gets interesting:
+Overall I enjoyed this test. It was interesting to read and improve legacy code, and fun to write the tests, then break them and fix them one by one! For ease of testing, I allowed update_quality to take an argument, with `@items` as the default.
 
-	- Once the sell by date has passed, Quality degrades twice as fast
-	- The Quality of an item is never negative
-	- "Aged Brie" actually increases in Quality the older it gets
-	- The Quality of an item is never more than 50
-	- "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
-	- "Backstage passes", like aged brie, increases in Quality as its SellIn value approaches;
-	Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
-	Quality drops to 0 after the concert
+Please see below for an irb extract. To run the test suite, please clone this repo, run `bundle` and then `rspec`.
 
-We have recently signed a supplier of conjured items. This requires an update to our system:
-
-	- "Conjured" items degrade in Quality twice as fast as normal items
-
-Feel free to make any changes to the UpdateQuality method and add any new code as long as everything
-still works correctly. However, do not alter the Item class or Items property as those belong to the
-goblin in the corner who will insta-rage and one-shot you as he doesn't believe in shared code
-ownership (you can make the UpdateQuality method and Items property static if you like, we'll cover
-for you).
-
-Just for clarification, an item can never have its Quality increase above 50, however "Sulfuras" is a
-legendary item and as such its Quality is 80 and it never alters.
+```irb
+2.7.2 :001 > items = [Item.new('foo', 1, 3),
+2.7.2 :002 > Item.new('Sulfuras, Hand of Ragnaros', 2, 80),
+2.7.2 :003 > Item.new('Aged Brie', 2, 49),
+2.7.2 :004 > Item.new('Backstage passes to a TAFKAL80ETC concert', 11, 0),
+2.7.2 :005 > Item.new('Conjured Hand', 4, 6)]
+2.7.2 :006 > gilded_rose = GildedRose.new(items)
+#<GildedRose:0x00007faef003b8e8 @items=[
+#<Item:0x00007faef0196e40 @name="foo", @sell_in=0, @quality=2>,
+#<Item:0x00007faef0196df0 @name="Sulfuras, Hand of Ragnaros", @sell_in=1, @quality=80>,
+#<Item:0x00007faef0196da0 @name="Aged Brie", @sell_in=1, @quality=50>,
+#<Item:0x00007faef0196d50 @name="Backstage passes to a TAFKAL80ETC concert", @sell_in=10, @quality=1>,
+#<Item:0x00007faef0196d51 @name="Conjured Hand", @sell_in=4, @quality=6>]>
+2.7.2 :006 > gilded_rose.update_quality
+ => [#<Item:0x00007faef0196e40 @name="foo", @sell_in=0, @quality=2>,
+ #<Item:0x00007faef0196df0 @name="Sulfuras, Hand of Ragnaros", @sell_in=1, @quality=80>,
+ #<Item:0x00007faef0196da0 @name="Aged Brie", @sell_in=1, @quality=50>,
+ #<Item:0x00007faef0196d50 @name="Backstage passes to a TAFKAL80ETC concert", @sell_in=10, @quality=1>,
+ #<Item:0x00007faef0196d51 @name="Conjured Hand", @sell_in=3, @quality=4>]>]
+```

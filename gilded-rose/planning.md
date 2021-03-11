@@ -8,8 +8,8 @@ Issues with the initial state of the gilded rose code
  - Both classes in same file
  - I don't initially see any use of the to_s method in the items class [update: although wouldn't want to anger the goblin so i guess it stays]
  - **Mock correctly to remove testing dependency**
- - **Write Item tests?**
- - Fix all Rubocops
+ - **Write Item tests?** [have asked if needed]
+ - Fix all Rubocops [done]
  - Run through form
 
 Class: Item
@@ -63,3 +63,12 @@ def backstage_pass
 etc
 end
 --> Always check with min/max before changing anything
+
+
+|Class | Subclass |Daily quality change|Depends on|
+|--|--|--|--|
+|Item|NormalItem|-1/-2| sell_in|
+||Sulfura|0|-|
+||Conjured|-2|-|
+||Aged Brie|1|-|
+||Backstage passes|+1/+2/+3/reset to 0|sell_in|

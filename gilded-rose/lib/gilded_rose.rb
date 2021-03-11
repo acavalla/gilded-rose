@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 require_relative 'item'
-#This class updates the quality and time until expiry of products
+require_relative 'aged_brie'
+# require_relative 'inventory'
+
+# This class updates the quality and time until expiry of products
 class GildedRose
   attr_reader :items
 
@@ -9,21 +12,29 @@ class GildedRose
   MAXIMUM_QUALITY = 50
   def initialize(items)
     @items = items
+    # @normal_item = NormalItem.new
+    # @sulfura = Sulfura.new
+    @aged_brie = AgedBrie.new
+    @types = [@aged_brie]
   end
 
   def update_quality(items = @items)
     items.each do |item|
       options(item)
-      item.sell_in -= 1 if item.sell_in > 0
+      item.sell_in -= 1 if item.sell_in.positive?
     end
   end
 
   private
+
   def options(item)
     if item.name == 'Aged Brie'
-      increase_quality(item)
+      # increase_qual(item)
+      @aged_brie.update(item)
     elsif item.name.include?('Backstage pass')
       backstage_pass(item)
+    elsif item.name.include?('Conjured')
+      2.times { reduce_qual(item) }
     elsif !item.name.include?('Sulfura')
       normal_protocol(item)
     end
@@ -31,22 +42,18 @@ class GildedRose
 
   def backstage_pass(item)
     if item.sell_in > 10
-      increase_quality(item)
+      increase_qual(item)
     elsif item.sell_in > 5
-      2.times { increase_quality(item) }
-    elsif item.sell_in > 0
-      3.times { increase_quality(item) }
+      2.times { increase_qual(item) }
+    elsif item.sell_in.positive?
+      3.times { increase_qual(item) }
     else
       item.quality = 0
     end
   end
 
   def normal_protocol(item)
-    if item.sell_in > 0
-      reduce_quality(item)
-    else
-      2.times { reduce_quality(item) }
-    end
+    item.sell_in.positive? ? reduce_qual(item) : 2.times { reduce_qual(item) }
   end
 
   def max?(item)
@@ -57,11 +64,11 @@ class GildedRose
     item.quality == MINIMUM_QUALITY
   end
 
-  def reduce_quality(item)
+  def reduce_qual(item)
     item.quality -= 1 unless min?(item)
   end
 
-  def increase_quality(item)
+  def increase_qual(item)
     item.quality += 1 unless max?(item)
   end
 end

@@ -7,7 +7,8 @@ describe GildedRose do
   items = [Item.new('foo', 1, 3),
            Item.new('Sulfuras, Hand of Ragnaros', 2, 80),
            Item.new('Aged Brie', 2, 49),
-           Item.new('Backstage passes to a TAFKAL80ETC concert', 11, 0)]
+           Item.new('Backstage passes to a TAFKAL80ETC concert', 11, 0),
+           Item.new('Conjured Hand', 4, 6)]
   gilded_rose = GildedRose.new(items)
 
   describe '#update_quality' do
@@ -69,6 +70,12 @@ describe GildedRose do
       it 'quality 0 when sell_in is 0' do
         5.times { gilded_rose.update_quality([items[3]]) }
         expect(items[3].quality).to eq 0
+      end
+    end
+
+    context 'conjured items' do
+      it 'quality -2 daily' do
+        expect(items[4].quality).to eq 4
       end
     end
   end
