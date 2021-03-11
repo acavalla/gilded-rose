@@ -10,7 +10,7 @@ describe 'feature' do
                Item.new('Conjured Hand', 4, 6)]
       gr = GildedRose.new(items)
       gr.update_quality
-      expect(items[2].quality).to be 50
+      expect(items[2].quality).to eq 50
     end
   end
 

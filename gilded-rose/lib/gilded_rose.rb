@@ -2,74 +2,39 @@
 
 require_relative 'item'
 require_relative 'aged_brie'
-# require_relative 'inventory'
+require_relative 'backstage_pass'
+require_relative 'conjured'
 
-# This class updates the quality and time until expiry of products
+# This class stratifies items into classes to update their stats
 class GildedRose
-  attr_reader :items
+  attr_reader :items, :aged_brie, :backstage_pass, :conjured, :normal_item, :types
 
   MINIMUM_QUALITY = 0
   MAXIMUM_QUALITY = 50
   def initialize(items)
     @items = items
     @normal_item = Inventory.new
-    # @sulfura = Sulfura.new
     @aged_brie = AgedBrie.new
-    @types = [@aged_brie]
+    @backstage_pass = BackstagePass.new
+    @conjured = Conjured.new
+    @types = {"Aged Brie" => aged_brie,
+              "Backstage passes to a TAFKAL80ETC concert" => backstage_pass,
+              "Conjured Hand" => conjured}
   end
 
   def update_quality(items = @items)
     items.each do |item|
       options(item)
-      item.sell_in -= 1 if item.sell_in.positive?
     end
   end
 
   private
 
   def options(item)
-    if item.name == 'Aged Brie'
-      # increase_qual(item)
-      @aged_brie.update(item)
-    elsif item.name.include?('Backstage pass')
-      backstage_pass(item)
-    elsif item.name.include?('Conjured')
-      2.times { reduce_qual(item) }
+    if types.key?(item.name)
+      types[item.name].update(item)
     elsif !item.name.include?('Sulfura')
-      # normal_protocol(item)
-      @normal_item.normal_protocol(item)
+      normal_item.update(item)
     end
-  end
-
-  def backstage_pass(item)
-    if item.sell_in > 10
-      increase_qual(item)
-    elsif item.sell_in > 5
-      2.times { increase_qual(item) }
-    elsif item.sell_in.positive?
-      3.times { increase_qual(item) }
-    else
-      item.quality = 0
-    end
-  end
-
-  def normal_protocol(item)
-    item.sell_in.positive? ? reduce_qual(item) : 2.times { reduce_qual(item) }
-  end
-
-  def max?(item)
-    item.quality == MAXIMUM_QUALITY
-  end
-
-  def min?(item)
-    item.quality == MINIMUM_QUALITY
-  end
-
-  def reduce_qual(item)
-    item.quality -= 1 unless min?(item)
-  end
-
-  def increase_qual(item)
-    item.quality += 1 unless max?(item)
   end
 end
