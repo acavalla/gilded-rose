@@ -20,19 +20,33 @@ class GildedRose
 
   private
   def options(item)
-    item.name == 'Aged Brie' ? increase_quality(item) :
-      item.name.include?('Backstage pass') ? backstage_pass(item) :
-         normal_protocol(item) if !item.name.include?('Sulfura')
+    if item.name == 'Aged Brie'
+      increase_quality(item)
+    elsif item.name.include?('Backstage pass')
+      backstage_pass(item)
+    elsif !item.name.include?('Sulfura')
+      normal_protocol(item)
+    end
   end
 
   def backstage_pass(item)
-    item.sell_in > 10 ? increase_quality(item) :
-      item.sell_in > 5 ? 2.times { increase_quality(item) } :
-        item.sell_in > 0 ? 3.times { increase_quality(item) } : item.quality = 0
+    if item.sell_in > 10
+      increase_quality(item)
+    elsif item.sell_in > 5
+      2.times { increase_quality(item) }
+    elsif item.sell_in > 0
+      3.times { increase_quality(item) }
+    else
+      item.quality = 0
+    end
   end
 
   def normal_protocol(item)
-    item.sell_in > 0 ? reduce_quality(item) : 2.times { reduce_quality(item) }
+    if item.sell_in > 0
+      reduce_quality(item)
+    else
+      2.times { reduce_quality(item) }
+    end
   end
 
   def max?(item)
