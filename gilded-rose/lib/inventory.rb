@@ -11,8 +11,12 @@ class Inventory
   end
 
   def update(item)
-    item.sell_in.positive? ? reduce_qual(item) : 2.times { reduce_qual(item) }
+    update_qual(item)
     update_sell_in(item)
+  end
+
+  def update_qual(item)
+    item.sell_in.positive? ? reduce_qual(item) : 2.times { reduce_qual(item) }
   end
 
   def update_sell_in(item)

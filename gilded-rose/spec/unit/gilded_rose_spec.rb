@@ -16,23 +16,6 @@ describe GildedRose do
       gilded_rose.update_quality
     end
 
-    context 'normal items' do
-      it 'alters quality and sell_in of normal items down by one' do
-        expect(items[0].quality).to eq 2
-        expect(items[0].sell_in).to eq 0
-        gilded_rose.update_quality([items[0]])
-        expect(items[0].quality).to eq 0
-        expect(items[0].sell_in).to eq 0
-        gilded_rose.update_quality([items[0]])
-        expect(items[0].quality).to eq 0
-        expect(items[0].sell_in).to eq 0
-      end
-
-      it 'does not change the name' do
-        expect(items[0].name).not_to eq 'fixme'
-      end
-    end
-
     context 'Sulfura' do
       it 'keeps quality of sulfura at 80' do
         expect(items[1].quality).to eq 80
@@ -70,12 +53,6 @@ describe GildedRose do
       it 'quality 0 when sell_in is 0' do
         5.times { gilded_rose.update_quality([items[3]]) }
         expect(items[3].quality).to eq 0
-      end
-    end
-
-    context 'conjured items' do
-      it 'quality -2 daily' do
-        expect(items[4].quality).to eq 4
       end
     end
   end
