@@ -1,7 +1,10 @@
-require_relative "item"
+# frozen_string_literal: true
+
+require_relative 'item'
 
 class GildedRose
   attr_reader :items
+
   MAXIMUM_QUALITY = 50
   MINIMUM_QUALITY = 0
   def initialize(items)
@@ -11,29 +14,28 @@ class GildedRose
   def update_quality(items = @items)
     items.each do |item|
       case item.name
-      when "Sulfuras, Hand of Ragnaros"
-      when "Aged Brie"
+      when 'Sulfuras, Hand of Ragnaros'
+      when 'Aged Brie'
         increase_quality(item)
-      when "Backstage passes to a TAFKAL80ETC concert"
+      when 'Backstage passes to a TAFKAL80ETC concert'
         backstage_pass(item)
       else
         normal_protocol(item)
       end
-    item.sell_in -= 1 if item.sell_in > 0
+      item.sell_in -= 1 if item.sell_in > 0
     end
   end
 
   private
 
   def backstage_pass(item)
-    case
-    when item.sell_in > 10
+    if item.sell_in > 10
       increase_quality(item)
-    when item.sell_in > 5
+    elsif item.sell_in > 5
       2.times { increase_quality(item) }
-    when item.sell_in > 0
+    elsif item.sell_in > 0
       3.times { increase_quality(item) }
-    when item.sell_in = 0
+    else
       item.quality = 0
     end
   end

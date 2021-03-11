@@ -7,7 +7,8 @@ Issues with the initial state of the gilded rose code
  - update_quality method has an empty arguments list
  - Both classes in same file
  - I don't initially see any use of the to_s method in the items class [update: although wouldn't want to anger the goblin so i guess it stays]
- - Mock correctly to remove testing dependency
+ - **Mock correctly to remove testing dependency**
+- **Write Item tests?** 
 
 Class: Item
 Attrs: name (String)
