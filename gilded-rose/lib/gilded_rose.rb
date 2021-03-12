@@ -18,8 +18,8 @@ class GildedRose
     @backstage_pass = BackstagePass.new
     @conjured = Conjured.new
     @types = { 'Aged Brie' => aged_brie,
-               'Backstage passes to a TAFKAL80ETC concert' => backstage_pass,
-               'Conjured Hand' => conjured }
+               'Backstage pass' => backstage_pass,
+               'Conjured' => conjured }
   end
 
   def update_quality(items = @items)
@@ -31,10 +31,15 @@ class GildedRose
   private
 
   def options(item)
-    if types.key?(item.name)
-      types[item.name].update(item)
-    elsif !item.name.include?('Sulfura')
-      normal_item.update(item)
+    if !item.name.include?('Sulfura') && types.each_key.none? do |key|
+      item.name.include?(key)
+      end
+    normal_item.update(item)
+    else types.each_key do |key|
+      if item.name.include?(key)
+        types[key].update(item)
+      end
+      end
     end
   end
 end
