@@ -7,7 +7,7 @@ This is my submission for the Gilded Rose tech test. You can see my planning in 
 
 However after doing that I realised I had one large class which did everything and one small class on which it was dependent. I drew a new table in the planning markdown and thought about how to make classes for types of items that would take care of updates, inheriting from the Inventory class which handled normal items' quality and sell-in behaviour (and made an extremely scribbly page of notes!). The more specialised classes also inherited the max and min checks and methods to increase or reduce quality by 1, checking against the max and min every time. I had never used inheritance before so it was fun to try it out.
 
-Since the method matching the names is now searching through a hash keys, I had to rewrite the method using each_key and each_key.none?, but now anything including 'Backstage pass' will be passed into the `BackstagePass` class, with similar functionality for `Conjured` items. 
+Since the method matching the names is now searching through a hash keys, I had to rewrite the method using each_key and each_key.none?, but now anything including 'Backstage pass' will be passed into the `BackstagePass` class, with similar functionality for `Conjured` items.
 
 Overall I enjoyed this test. It was interesting to read and improve legacy code, and fun to write the tests, then break them and fix them one by one! For ease of testing, I allowed update_quality to take an argument, with `@items` as the default.
 
@@ -18,8 +18,7 @@ Please see below for an irb extract. To run the test suite, please clone this re
 2.7.2 :002 >   Item.new('Sulfuras, Hand of Ragnaros', 2, 80),
 2.7.2 :003 >   Item.new('Aged Brie', 2, 49),
 2.7.2 :004 >   Item.new('Backstage passes to a TAFKAL80ETC concert', 11, 0),
-
-2.7.2 :005 >            Item.new('Conjured Hand', 4, 6)]
+2.7.2 :005 >   Item.new('Conjured Hand', 4, 6)]
  => [#<Item:0x00007fb6e198cd18 @name="foo", @sell_in=1, @quality=3>, #<Item:0x00007fb6e198ccc8 ...
 2.7.2 :006 > gr = GildedRose.new(items)
  => #<GildedRose:0x00007fb6e19ac938 @items=[#<Item:0x00007fb6e198cd18 @name="foo", @sell_in=1, ...
@@ -35,8 +34,8 @@ Please see below for an irb extract. To run the test suite, please clone this re
 @backstage_pass=#<BackstagePass:0x00007fb6e19ac8c0>,
 @conjured=#<Conjured:0x00007fb6e19ac898>,
 @types={"AgedBrie"=>#<AgedBrie:0x00007fb6e19ac8e8>,
-"Backstage passes to a TAFKAL80ETC concert"=>#<BackstagePass:0x00007fb6e19ac8c0>,
-"Conjured Hand"=>#<Conjured:0x00007fb6e19ac898>}>
+"Backstage pass"=>#<BackstagePass:0x00007fb6e19ac8c0>,
+"Conjured"=>#<Conjured:0x00007fb6e19ac898>}>
 2.7.2 :008 > gr.update_quality
  => [#<Item:0x00007fb6e198cd18 @name="foo", @sell_in=0, @quality=2>,
  #<Item:0x00007fb6e198ccc8 @name="Sulfuras, Hand of Ragnaros", @sell_in=2, @quality=80>,
