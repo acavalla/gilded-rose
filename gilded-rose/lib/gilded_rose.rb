@@ -24,22 +24,22 @@ class GildedRose
 
   def update_quality(items = @items)
     items.each do |item|
-      options(item)
+      options(item) unless item.name.include?('Sulfura')
     end
   end
 
   private
 
   def options(item)
-    if !item.name.include?('Sulfura') && types.each_key.none? do |key|
-      item.name.include?(key)
-      end
-    normal_item.update(item)
+    if types.each_key.none? { |key| item_name_in_key?(item, key) }
+      normal_item.update(item)
     else types.each_key do |key|
-      if item.name.include?(key)
-        types[key].update(item)
-      end
-      end
+           types[key].update(item) if item_name_in_key?(item, key)
+         end
     end
+  end
+
+  def item_name_in_key?(item, key)
+    item.name.include?(key)
   end
 end
