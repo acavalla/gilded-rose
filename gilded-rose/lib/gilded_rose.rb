@@ -31,15 +31,11 @@ class GildedRose
   private
 
   def options(item)
-    if types.each_key.none? { |key| item_name_in_key?(item, key) }
+    if types.each_key.none? { |key| item.name.include?(key) }
       normal_item.update(item)
     else types.each_key do |key|
-           types[key].update(item) if item_name_in_key?(item, key)
+           types[key].update(item) if item.name.include?(key)
          end
     end
-  end
-
-  def item_name_in_key?(item, key)
-    item.name.include?(key)
   end
 end
