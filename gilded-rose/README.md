@@ -14,22 +14,33 @@ Overall I enjoyed this test. It was interesting to read and improve legacy code,
 Please see below for an irb extract. To run the test suite, please clone this repo, run `bundle` and then `rspec`.
 
 ```irb
-2.7.2 :001 > items = [Item.new('foo', 1, 3),
-2.7.2 :002 > Item.new('Sulfuras, Hand of Ragnaros', 2, 80),
-2.7.2 :003 > Item.new('Aged Brie', 2, 49),
-2.7.2 :004 > Item.new('Backstage passes to a TAFKAL80ETC concert', 11, 0),
-2.7.2 :005 > Item.new('Conjured Hand', 4, 6)]
-2.7.2 :006 > gilded_rose = GildedRose.new(items)
-#<GildedRose:0x00007faef003b8e8 @items=[
-#<Item:0x00007faef0196e40 @name="foo", @sell_in=0, @quality=2>,
-#<Item:0x00007faef0196df0 @name="Sulfuras, Hand of Ragnaros", @sell_in=1, @quality=80>,
-#<Item:0x00007faef0196da0 @name="Aged Brie", @sell_in=1, @quality=50>,
-#<Item:0x00007faef0196d50 @name="Backstage passes to a TAFKAL80ETC concert", @sell_in=10, @quality=1>,
-#<Item:0x00007faef0196d51 @name="Conjured Hand", @sell_in=4, @quality=6>]>
-2.7.2 :006 > gilded_rose.update_quality
- => [#<Item:0x00007faef0196e40 @name="foo", @sell_in=0, @quality=2>,
- #<Item:0x00007faef0196df0 @name="Sulfuras, Hand of Ragnaros", @sell_in=1, @quality=80>,
- #<Item:0x00007faef0196da0 @name="Aged Brie", @sell_in=1, @quality=50>,
- #<Item:0x00007faef0196d50 @name="Backstage passes to a TAFKAL80ETC concert", @sell_in=10, @quality=1>,
- #<Item:0x00007faef0196d51 @name="Conjured Hand", @sell_in=3, @quality=4>]>]
+2.7.2 :001 > items =items = [Item.new('foo', 1, 3),
+2.7.2 :002 >   Item.new('Sulfuras, Hand of Ragnaros', 2, 80),
+2.7.2 :003 >   Item.new('Aged Brie', 2, 49),
+2.7.2 :004 >   Item.new('Backstage passes to a TAFKAL80ETC concert', 11, 0),
+
+2.7.2 :005 >            Item.new('Conjured Hand', 4, 6)]
+ => [#<Item:0x00007fb6e198cd18 @name="foo", @sell_in=1, @quality=3>, #<Item:0x00007fb6e198ccc8 ...
+2.7.2 :006 > gr = GildedRose.new(items)
+ => #<GildedRose:0x00007fb6e19ac938 @items=[#<Item:0x00007fb6e198cd18 @name="foo", @sell_in=1, ...
+2.7.2 :007 > gr
+ => #<GildedRose:0x00007fb6e19ac938 @items=[
+ #<Item:0x00007fb6e198cd18 @name="foo", @sell_in=1, @quality=3>,
+#<Item:0x00007fb6e198ccc8 @name="Sulfuras, Hand of Ragnaros", @sell_in=2, @quality=80>,
+#<Item:0x00007fb6e198cc78 @name="Aged Brie", @sell_in=2, @quality=49>,
+#<Item:0x00007fb6e198cc28 @name="Backstage passes to a TAFKAL80ETC concert", @sell_in=11, @quality=0>,
+#<Item:0x00007fb6e198cbd8 @name="Conjured Hand", @sell_in=4, @quality=6>],
+@normal_item=#<Inventory:0x00007fb6e19ac910>
+@aged_brie=#<AgedBrie:0x00007fb6e19ac8e8>,
+@backstage_pass=#<BackstagePass:0x00007fb6e19ac8c0>,
+@conjured=#<Conjured:0x00007fb6e19ac898>,
+@types={"AgedBrie"=>#<AgedBrie:0x00007fb6e19ac8e8>,
+"Backstage passes to a TAFKAL80ETC concert"=>#<BackstagePass:0x00007fb6e19ac8c0>,
+"Conjured Hand"=>#<Conjured:0x00007fb6e19ac898>}>
+2.7.2 :008 > gr.update_quality
+ => [#<Item:0x00007fb6e198cd18 @name="foo", @sell_in=0, @quality=2>,
+ #<Item:0x00007fb6e198ccc8 @name="Sulfuras, Hand of Ragnaros", @sell_in=2, @quality=80>, 
+#<Item:0x00007fb6e198cc78 @name="Aged Brie", @sell_in=1, @quality=50>,
+#<Item:0x00007fb6e198cc28 @name="Backstage passes to a TAFKAL80ETC concert", @sell_in=10, @quality=1>,
+#<Item:0x00007fb6e198cbd8 @name="Conjured Hand", @sell_in=3, @quality=4>]
 ```
