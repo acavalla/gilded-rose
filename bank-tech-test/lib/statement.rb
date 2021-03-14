@@ -4,18 +4,18 @@
 class Statement
   attr_reader :transactions
 
-  def initialize(transactions)
-    @transactions = transactions
+  # def initialize(transactions)
+  #   @transactions = transactions
+  # end
+
+  def print(transactions)
+    puts "date || credit || debit || balance#{calculate(transactions).empty? ? '' : "\n#{calculate(transactions)}"}"
   end
 
-  def print
-    puts "date || credit || debit || balance#{calculate.empty? ? '' : "\n#{calculate}"}"
-  end
-
-  def calculate
+  def calculate(transactions)
     str = []
     transactions.reverse_each do |transaction|
-      str << if transaction.details['amount'].positive?
+      str << if transaction.amount.positive?
                deposit(transaction)
              else
                withdrawal(transaction)
@@ -27,14 +27,14 @@ class Statement
   private
 
   def withdrawal(transaction)
-    "#{transaction.details['date']} || || "\
-    "#{-transaction.details['amount']} || "\
-    "#{transaction.details['current_balance']}"
+    "#{transaction.date} || || "\
+    "#{-transaction.amount} || "\
+    "#{transaction.current_balance}"
   end
 
   def deposit(transaction)
-    "#{transaction.details['date']} || "\
-    "#{transaction.details['amount']} || || "\
-    "#{transaction.details['current_balance']}"
+    "#{transaction.date} || "\
+    "#{transaction.amount} || || "\
+    "#{transaction.current_balance}"
   end
 end

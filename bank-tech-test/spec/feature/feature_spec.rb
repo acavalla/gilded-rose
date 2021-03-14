@@ -11,7 +11,7 @@ describe 'features' do
       2.times { bank.transaction(amount, date) }
       t1 = bank.transactions[0]
       t2 = bank.transactions[1]
-      expect(t2.details['current_balance']).to eq t1.details['current_balance'] + amount
+      expect(t2.current_balance).to eq t1.current_balance + amount
     end
   end
 

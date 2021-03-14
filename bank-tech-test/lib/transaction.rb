@@ -2,11 +2,11 @@
 
 # This class stores details of transactions
 class Transaction
-  attr_reader :details
+  attr_reader :details, :amount, :date, :current_balance
 
   def initialize(amount, date, balance)
-    @details = { 'amount' => amount,
-                 'date' => date,
-                 'current_balance' => balance }
+    @amount = amount
+    @date = date
+    @current_balance = balance
   end
 end

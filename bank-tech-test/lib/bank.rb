@@ -9,7 +9,7 @@ class Bank
   def initialize
     @balance = 0
     @transactions = []
-    # @statements = []
+    @statement = Statement.new
   end
 
   def transaction(amount, date)
@@ -18,8 +18,7 @@ class Bank
   end
 
   def create_statement
-    @statement = Statement.new(@transactions)
-    statement.print
+    statement.print(transactions)
   end
 
   private
