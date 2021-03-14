@@ -18,7 +18,7 @@ describe Bank do
     end
 
     it 'changes the value of balance' do
-      subject.transaction(amount, date)
+      subject.make_transaction(amount, date)
       expect(subject.balance).to eq amount
     end
 
@@ -26,7 +26,7 @@ describe Bank do
       allow(subject).to receive(:new_transaction).with(-amount, date) do
         subject.transactions << transaction
       end
-      subject.transaction(-amount, date)
+      subject.make_transaction(-amount, date)
       allow(transaction).to receive(:details).and_return(withdrawal_hash)
       expect(subject.balance).to eq(-120)
     end

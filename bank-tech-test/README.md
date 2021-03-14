@@ -80,6 +80,3 @@ date || credit || debit || balance
 04.01.2000 || || 675 || 425
 03.01.2000 || 1000 || || 1100
 01.01.2000 || 100 || || 100```
-
-To do:
-- See if there's a more efficient way to return all those values from a double in spec

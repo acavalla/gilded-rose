@@ -8,7 +8,7 @@ describe 'features' do
   let(:bank) { Bank.new }
   describe 'sequential transactions' do
     it 'has correct maths' do
-      2.times { bank.transaction(amount, date) }
+      2.times { bank.make_transaction(amount, date) }
       t1 = bank.transactions[0]
       t2 = bank.transactions[1]
       expect(t2.current_balance).to eq t1.current_balance + amount
@@ -17,7 +17,7 @@ describe 'features' do
 
   describe 'trio working' do
     it 'is called on initializing' do
-      bank.transaction(amount, date)
+      bank.make_transaction(amount, date)
       expect($stdout).to receive(:puts).with("date || credit || debit || balance\n#{date} || #{amount} || || #{amount}")
       bank.create_statement
     end

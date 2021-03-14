@@ -4,10 +4,6 @@
 class Statement
   attr_reader :transactions
 
-  # def initialize(transactions)
-  #   @transactions = transactions
-  # end
-
   def print(transactions)
     puts "date || credit || debit || balance#{calculate(transactions).empty? ? '' : "\n#{calculate(transactions)}"}"
   end
