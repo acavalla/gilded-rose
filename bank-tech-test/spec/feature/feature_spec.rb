@@ -18,7 +18,7 @@ describe 'features' do
   describe 'trio working' do
     it 'is called on initializing' do
       bank.make_transaction(amount, date)
-      expect($stdout).to receive(:puts).with("date || credit || debit || balance\n#{date} || #{amount} || || #{amount}")
+      expect($stdout).to receive(:puts).with("date || credit || debit || balance\n#{date} || #{amount} || || #{'%.2f' % amount}")
       bank.create_statement
     end
   end

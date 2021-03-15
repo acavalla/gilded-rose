@@ -11,18 +11,10 @@ Please see below for irb demonstration and plans.
 
 **After coach review**
 Things to change/add:
-- change Rubocop
-- **.00**
-- Feature/unit test folders
-- Test withdrawal printing in statement or feature spec (fixes coverage to 100%)
 - Follow user stories in feature spec
 - **Autogenerate date / time, use strf, stub**
 - "You should be able to indirectly test in your bank_spec that the transactions are being added to the array of transactions (by testing the public methods that are interacting with the private method carrying this out). It looks as though you are doing this manually in your tests."
-- Remove commented out code
-- Take transaction data out of hash
 - "Storing both the balance and the amount is a duplication of code, and you can actually just include the latter in order to calculate the balance after each transaction at runtime of the print statement."
-- "In order to fully isolate your classes from one another, dependency injection is something that can employed here: specifically in def create_statement where @statement = Statement.new is being called directly in the method. You could pass in something like statement = Statement.new as a default argument, allowing for the passing in of a double instead of the real class while testing."
-- "The same can be done for Transaction.new in your new_transaction method, you could pass in the Transaction class itself in your initialise method as a default argument. This will allow for you to pass in a double instead while testing."
 
 ## Specification
 

@@ -12,13 +12,13 @@ describe Statement do
   describe '#calculate' do
     it 'displays statements' do
       expect(subject.calculate([transaction])).to eq "#{transaction.date} || "\
-            "#{transaction.amount} || || #{transaction.current_balance}"
+            "#{transaction.amount} || || #{'%.2f' % transaction.current_balance}"
     end
 
     it 'goes in reverse order' do
       expect(subject.calculate([transaction, transaction2])).to eq "#{date2} || || 120 || "\
-      "#{transaction2.current_balance}\n#{date} || 120 || || "\
-      "#{transaction.current_balance}"
+      "#{'%.2f' % transaction2.current_balance}\n#{date} || 120 || || "\
+      "#{'%.2f' % transaction.current_balance}"
     end
   end
 end

@@ -25,12 +25,12 @@ class Statement
   def withdrawal(transaction)
     "#{transaction.date} || || "\
     "#{-transaction.amount} || "\
-    "#{transaction.current_balance}"
+    "#{'%.2f' % transaction.current_balance}"
   end
 
   def deposit(transaction)
     "#{transaction.date} || "\
     "#{transaction.amount} || || "\
-    "#{transaction.current_balance}"
+    "#{'%.2f' % transaction.current_balance}"
   end
 end
