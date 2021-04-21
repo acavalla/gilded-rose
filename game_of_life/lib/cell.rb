@@ -4,6 +4,10 @@ class Cell
     @alive = false
   end
 
+  def spawn
+    @alive = true
+  end
+
   def alive?
     alive
   end
