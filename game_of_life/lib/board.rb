@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Board
-  attr_reader :layout, :neighbs, :dims
+  attr_reader :layout, :neighb_tally, :dims
 
   DEF_DIMS = 2
   def initialize(dims = DEF_DIMS)
@@ -23,45 +23,29 @@ class Board
   end
 
   def neighbours
-    @neighbs = new_array(dims)
+    @neighb_tally = new_array(dims)
+    neighb_loc = [[-1,-1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
     layout.each_with_index.map do |row, row_index|
       row.each_with_index.map do |spot, spot_index|
-        add_to_neighbours(row_index, spot_index) if spot == 1
+        if spot == 1
+        neighb_loc.each do |loc|
+          unless row_index+loc[0] < 0 || spot_index+loc[1] < 0 || row_index+loc[0] > dims-1 || spot_index+loc[1] > dims-1
+            add_one(row_index+loc[0], spot_index+loc[1])
+          end
+        end
+      end
       end
     end
   end
 
   private
 
-  def add_to_neighbours(row_index, spot_index)
-    add_one_above(row_index, spot_index)
-    add_one_left(row_index, spot_index)
-    add_one_below(row_index, spot_index)
-    add_one_right(row_index, spot_index)
-  end
-
   def new_array(dims)
     Array.new(dims) { Array.new(dims, 0) }
   end
 
-  def add_one_above(row_index, spot_index)
-    add_one(row_index - 1, spot_index) if row_index.positive?
-  end
-
-  def add_one_left(row_index, spot_index)
-    add_one(row_index, spot_index - 1) if spot_index.positive?
-  end
-
-  def add_one_below(row_index, spot_index)
-    add_one(row_index + 1, spot_index) if row_index < layout.length - 1
-  end
-
-  def add_one_right(row_index, spot_index)
-    add_one(row_index, spot_index + 1) if spot_index < layout.length - 1
-  end
-
   def add_one(row_index, spot_index)
-    @neighbs[row_index][spot_index] += 1
+    @neighb_tally[row_index][spot_index] += 1
   end
 
   def new_layout
@@ -73,9 +57,9 @@ class Board
   end
 
   def dead_or_alive(row_index, spot_index, spot)
-    if neighbs[row_index][spot_index] == 3
+    if neighb_tally[row_index][spot_index] == 3
       alive([row_index, spot_index])
-    elsif spot == 1 && neighbs[row_index][spot_index] == 2
+    elsif spot == 1 && neighb_tally[row_index][spot_index] == 2
       alive([row_index, spot_index])
     else
       dead([row_index, spot_index])

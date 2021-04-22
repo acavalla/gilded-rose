@@ -24,20 +24,19 @@ describe Board do
   end
 
   describe '.tick' do
-    it 'updates layout based on neighbours' do
+    before do
       subject.alive([0, 1])
       subject.alive([1, 0])
       subject.alive([1, 1])
       subject.tick
-      expect(subject.layout).to eq [[0, 0], [0, 1]]
+    end
+    it 'updates layout based on neighbours' do
+      expect(subject.layout).to eq [[1, 1], [1, 1]]
     end
 
     it 'updates layout based on neighbours' do
-      subject.alive([0, 1])
-      subject.alive([1, 0])
-      subject.alive([1, 1])
       subject.tick
-      expect(subject.tick).to eq [[0, 0], [0, 0]]
+      expect(subject.layout).to eq [[1, 1], [1, 1]]
     end
   end
 
@@ -45,7 +44,7 @@ describe Board do
     it 'tallies living neighbours' do
       subject.alive([1, 1])
       subject.neighbours
-      expect(subject.neighbs).to eq [[0, 1], [1, 0]]
+      expect(subject.neighb_tally).to eq [[1, 1], [1, 0]]
     end
   end
 end
