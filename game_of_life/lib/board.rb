@@ -7,4 +7,8 @@ class Board
   def alive(location)
     @layout[location[0]][location[1]] = 1
   end
+
+  def dead(location)
+    @layout[location[0]][location[1]] = 0
+  end
 end
