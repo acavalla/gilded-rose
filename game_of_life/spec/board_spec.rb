@@ -27,5 +27,13 @@ describe Board do
     end
   end
 
+  describe '.neighbours' do
+    it 'tallies living neighbours' do
+      subject.alive([1,1])
+      subject.neighbours
+      expect(subject.neighbs).to eq [[0, 1], [1, 0]]
+    end
+  end
+
 
 end
