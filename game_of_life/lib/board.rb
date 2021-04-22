@@ -1,7 +1,8 @@
 class Board
   attr_reader :layout, :neighbs
-  def initialize(dims = 2)
-    @layout = Array.new(dims) { Array.new(dims, 0) }
+  DEF_DIMS = 2
+  def initialize
+    @layout = new_array
   end
 
   def alive(location)
@@ -13,11 +14,22 @@ class Board
   end
 
   def tick
-    layout
+    neighbours
+    layout.each_with_index.map do |row, row_index|
+      row.each_with_index.map do |spot, spot_index|
+        if neighbs[row_index][spot_index] == 3
+          spot = alive(spot_index, row_index)
+        elsif spot == 1 && neighbs[row_index][spot_index] == 2
+          spot = alive([spot_index, row_index])
+        else
+          spot = 0
+        end
+      end
+    end
   end
 
   def neighbours
-    @neighbs = Array.new(2) { Array.new(2, 0) }
+    @neighbs = new_array
     layout.each_with_index.map do |row, row_index|
       row.each_with_index.map do |spot, spot_index|
         if spot == 1
@@ -31,6 +43,10 @@ class Board
   end
 
   private
+
+  def new_array(dims = DEF_DIMS)
+    Array.new(dims) { Array.new(dims, 0) }
+  end
 
   def add_one_above(row_index, spot_index)
     if row_index > 0
