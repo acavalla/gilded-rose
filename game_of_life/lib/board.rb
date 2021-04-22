@@ -16,8 +16,6 @@ class Board
     layout
   end
 
-  private
-
   def neighbours
     @neighbs = Array.new(2) { Array.new(2, 0) }
     layout.each_with_index.map do |row, row_index|
@@ -31,6 +29,8 @@ class Board
       end
     end
   end
+
+  private
 
   def add_one_above(row_index, spot_index)
     if row_index > 0
