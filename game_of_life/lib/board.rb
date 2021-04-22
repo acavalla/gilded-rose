@@ -1,8 +1,9 @@
 class Board
-  attr_reader :layout, :neighbs
+  attr_reader :layout, :neighbs, :dims
   DEF_DIMS = 2
-  def initialize
-    @layout = new_array
+  def initialize(dims = DEF_DIMS)
+    @dims = dims
+    @layout = new_array(dims)
   end
 
   def alive(location)
@@ -29,7 +30,7 @@ class Board
   end
 
   def neighbours
-    @neighbs = new_array
+    @neighbs = new_array(dims)
     layout.each_with_index.map do |row, row_index|
       row.each_with_index.map do |spot, spot_index|
         if spot == 1
@@ -44,7 +45,7 @@ class Board
 
   private
 
-  def new_array(dims = DEF_DIMS)
+  def new_array(dims)
     Array.new(dims) { Array.new(dims, 0) }
   end
 
