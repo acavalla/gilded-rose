@@ -16,6 +16,8 @@ class Board
     layout
   end
 
+  private
+
   def neighbours
     @neighbs = Array.new(2) { Array.new(2, 0) }
     layout.each_with_index.map do |row, row_index|
