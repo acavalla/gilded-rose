@@ -1,6 +1,10 @@
 class Board
   attr_reader :layout
-  def initialize(columns = 2, rows = 2)
-    @layout = [Array.new(columns, 0)] * rows
+  def initialize(dims = 2)
+    @layout = Array.new(dims) { Array.new(dims, 0) }
+  end
+
+  def alive(location)
+    @layout[location[0]][location[1]] = 1
   end
 end
