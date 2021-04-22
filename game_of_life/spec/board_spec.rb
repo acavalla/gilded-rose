@@ -21,5 +21,11 @@ describe Board do
     end
   end
 
+  describe '.tick' do
+    it 'updates layout' do
+      expect(subject.tick).to eq subject.layout
+    end
+  end
+
 
 end

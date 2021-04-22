@@ -11,4 +11,8 @@ class Board
   def dead(location)
     @layout[location[0]][location[1]] = 0
   end
+
+  def tick
+    layout
+  end
 end
