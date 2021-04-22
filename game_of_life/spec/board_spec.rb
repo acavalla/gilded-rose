@@ -26,7 +26,16 @@ describe Board do
       subject.alive([0,1])
       subject.alive([1,0])
       subject.alive([1,1])
-      expect(subject.tick).to eq [[0, 0], [0, 1]] 
+      subject.tick
+      expect(subject.layout).to eq [[0, 0], [0, 1]]
+    end
+
+    it 'updates layout based on neighbours' do
+      subject.alive([0,1])
+      subject.alive([1,0])
+      subject.alive([1,1])
+      subject.tick
+      expect(subject.tick).to eq [[0, 0], [0, 0]]
     end
   end
 

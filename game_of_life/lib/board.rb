@@ -18,11 +18,11 @@ class Board
     layout.each_with_index.map do |row, row_index|
       row.each_with_index.map do |spot, spot_index|
         if neighbs[row_index][spot_index] == 3
-          spot = alive(spot_index, row_index)
+          alive([row_index, spot_index])
         elsif spot == 1 && neighbs[row_index][spot_index] == 2
-          spot = alive([spot_index, row_index])
+          alive([row_index, spot_index])
         else
-          spot = 0
+          dead([row_index, spot_index])
         end
       end
     end
