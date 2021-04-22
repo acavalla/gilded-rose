@@ -9,4 +9,9 @@ describe Cell do
     subject.spawn
     expect(subject).to be_alive
   end
+
+  it 'can die' do
+    subject.die
+    expect(subject).not_to be_alive
+  end
 end
