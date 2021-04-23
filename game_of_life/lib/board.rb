@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class Board
-  attr_reader :layout, :neighb_tally, :dims
+  attr_reader :layout, :neighb_tally, :dims, :live
 
   DEF_DIMS = 2
+  NEIGHB_LOC = [[-1, -1], [-1, 0], [-1, 1],
+                [0, -1], [0, 1],
+                [1, -1], [1, 0], [1, 1]]
   def initialize(dims = DEF_DIMS)
     @dims = dims
     @layout = new_array(dims)
@@ -24,21 +27,23 @@ class Board
 
   def neighbours
     @neighb_tally = new_array(dims)
-    neighb_loc = [[-1,-1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
-    layout.each_with_index.map do |row, row_index|
-      row.each_with_index.map do |spot, spot_index|
-        if spot == 1
-        neighb_loc.each do |loc|
-          unless row_index+loc[0] < 0 || spot_index+loc[1] < 0 || row_index+loc[0] > dims-1 || spot_index+loc[1] > dims-1
-            add_one(row_index+loc[0], spot_index+loc[1])
-          end
-        end
-      end
-      end
+    live_cells
+    live.each do |loc|
+      label_neighbours(loc)
     end
   end
 
-  private
+  # private
+
+  # def alive_cells
+
+  def label_neighbours(loc)
+    NEIGHB_LOC.each do |nloc|
+      unless (loc[0] + nloc[0]).negative? || (loc[1] + nloc[1]).negative? || loc[0] + nloc[0] > dims - 1 || loc[1] + nloc[1] > dims - 1
+        add_one(loc[0] + nloc[0], loc[1] + nloc[1])
+      end
+    end
+  end
 
   def new_array(dims)
     Array.new(dims) { Array.new(dims, 0) }
@@ -54,6 +59,15 @@ class Board
         dead_or_alive(row_index, spot_index, spot)
       end
     end
+  end
+
+  def live_cells
+    @live = []
+    layout.each_with_index.map do |row, row_index|
+      row.each_with_index.map do |spot, spot_index|
+        live << [row_index, spot_index] if spot == 1
+        end
+     end
   end
 
   def dead_or_alive(row_index, spot_index, spot)
