@@ -38,12 +38,20 @@ class Board
 
   def label_neighbours(loc)
     NEIGHB_LOC.each do |nloc|
-      add_one(loc[0] + nloc[0], loc[1] + nloc[1]) unless edge_cell(loc, nloc)
+      add_one(loc[0] + nloc[0], loc[1] + nloc[1]) unless out_of_bounds(loc, nloc)
     end
   end
 
-  def edge_cell(loc, nloc)
-    (loc[0] + nloc[0]).negative? || (loc[1] + nloc[1]).negative? || loc[0] + nloc[0] > dims - 1 || loc[1] + nloc[1] > dims - 1
+  def out_of_bounds(loc, nloc)
+    top_left(loc, nloc) || bottom_right(loc, nloc)
+  end
+
+  def top_left(loc, nloc)
+    (loc[0] + nloc[0]).negative? || (loc[1] + nloc[1]).negative?
+  end
+
+  def bottom_right(loc, nloc)
+    loc[0] + nloc[0] > dims - 1 || loc[1] + nloc[1] > dims - 1
   end
 
   def new_array(dims)
@@ -72,14 +80,14 @@ class Board
   end
 
   def dead_or_alive(row_index, spot_index, spot)
-    if alive_conditions(row_index, spot_index, spot)
+    if conditions_for_life(row_index, spot_index, spot)
       alive([row_index, spot_index])
     else
       dead([row_index, spot_index])
     end
   end
 
-  def alive_conditions(row_index, spot_index, spot)
+  def conditions_for_life(row_index, spot_index, spot)
     neighb_tally[row_index][spot_index] == 3 ||
       (spot == 1 && neighb_tally[row_index][spot_index] == 2)
   end
