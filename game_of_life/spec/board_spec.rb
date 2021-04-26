@@ -29,7 +29,7 @@ describe Board do
     end
 
     it 'live cells with one live neighbour die' do
-      subject.alive([0, 0])
+      subject.alive([1, 0])
       subject.tick
       expect(subject.live).to eq []
     end
@@ -42,20 +42,19 @@ describe Board do
     end
 
     it 'kills cells with 4 neighbours' do
-      subject.alive([0, 1])
       subject.alive([1, 0])
       subject.alive([1, 1])
       subject.alive([1, 2])
       subject.alive([2, 1])
       subject.tick
-      expect(subject.live).not_to include [0, 0]
+      expect(subject.live).not_to include [1, 1]
     end
   end
 
   describe '.neighbours' do
     it 'tallies living neighbours' do
       subject.alive([1, 1])
-      subject.neighbours
+      subject.count_neighbours
       neighbs = [{ location: [0, 0], tally: 1, status: 0 },
                  { location: [0, 1], tally: 1, status: 0 },
                  { location: [0, 2], tally: 1, status: 0 },
