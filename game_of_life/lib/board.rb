@@ -39,33 +39,29 @@ class Board
 
   def label_neighbours(loc)
     NEIGHBOURS.each do |nloc|
-      current_spot = [loc[0] + nloc[0], loc[1] + nloc[1]]
-      if in_hash?(current_spot)
-        increase_count(current_spot)
-      else
-        add_to_hash(current_spot)
-      end
+      spot = [loc[0] + nloc[0], loc[1] + nloc[1]]
+      in_hash?(spot) ? increase_count(spot) : add_to_hash(spot)
     end
   end
 
-  def in_hash?(current_spot)
-    neighb_tally.any? { |h| h[:location] == current_spot }
+  def in_hash?(spot)
+    neighb_tally.any? { |h| h[:location] == spot }
   end
 
-  def increase_count(current_spot)
-    neighb_tally.select { |key| key[:location] == current_spot }[0][:tally] += 1
+  def increase_count(spot)
+    neighb_tally.select { |key| key[:location] == spot }[0][:tally] += 1
   end
 
-  def add_to_hash(current_spot)
-    neighb_tally << { location: current_spot,
-                            tally: 1,
-                            status: live.include?(current_spot) ? 1 : 0 }
+  def add_to_hash(spot)
+    neighb_tally << { location: spot,
+                      tally: 1,
+                      status: live.include?(spot) ? 1 : 0 }
   end
 
   def update_live
     @live = []
-    neighb_tally.select { |hash| three(hash) }.each { |hash| alive(hash) }
-    neighb_tally.select { |hash| two_alive(hash) }.each { |hash| alive(hash) }
+    neighb_tally.select { |hash| three(hash) }.each { |hash| alive(hash[:location]) }
+    neighb_tally.select { |hash| two_alive(hash) }.each { |hash| alive(hash[:location]) }
   end
 
   def three(hash)
