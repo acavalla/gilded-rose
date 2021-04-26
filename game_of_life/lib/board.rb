@@ -16,11 +16,11 @@ class Board
   end
 
   def alive(location)
-    live << [location[0], location[1]]
+    live << location
   end
 
   def dead(location)
-    live.delete([location[0], location[1]])
+    live.delete(location)
   end
 
   def tick
@@ -60,15 +60,15 @@ class Board
 
   def update_live
     @live = []
-    neighb_tally.select { |hash| three(hash) }.each { |hash| alive(hash[:location]) }
-    neighb_tally.select { |hash| two_alive(hash) }.each { |hash| alive(hash[:location]) }
+    @neighb_tally = neighb_tally.select { |hash| three(hash) || two_live(hash) }
+    neighb_tally.each { |hash| alive(hash[:location]) }
   end
 
   def three(hash)
     hash[:tally] == 3
   end
 
-  def two_alive(hash)
+  def two_live(hash)
     hash[:tally] == 2 && hash[:status] == 1
   end
 end
