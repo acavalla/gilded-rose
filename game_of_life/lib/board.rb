@@ -6,7 +6,8 @@ class Board
   DEF_DIMS = 2
   NEIGHB_LOC = [[-1, -1], [-1, 0], [-1, 1],
                 [0, -1], [0, 1],
-                [1, -1], [1, 0], [1, 1]]
+                [1, -1], [1, 0], [1, 1]].freeze
+
   def initialize(dims = DEF_DIMS)
     @dims = dims
     @layout = new_array(dims)
@@ -33,16 +34,16 @@ class Board
     end
   end
 
-  # private
-
-  # def alive_cells
+  private
 
   def label_neighbours(loc)
     NEIGHB_LOC.each do |nloc|
-      unless (loc[0] + nloc[0]).negative? || (loc[1] + nloc[1]).negative? || loc[0] + nloc[0] > dims - 1 || loc[1] + nloc[1] > dims - 1
-        add_one(loc[0] + nloc[0], loc[1] + nloc[1])
-      end
+      add_one(loc[0] + nloc[0], loc[1] + nloc[1]) unless edge_cell(loc, nloc)
     end
+  end
+
+  def edge_cell(loc, nloc)
+    (loc[0] + nloc[0]).negative? || (loc[1] + nloc[1]).negative? || loc[0] + nloc[0] > dims - 1 || loc[1] + nloc[1] > dims - 1
   end
 
   def new_array(dims)
@@ -66,17 +67,20 @@ class Board
     layout.each_with_index.map do |row, row_index|
       row.each_with_index.map do |spot, spot_index|
         live << [row_index, spot_index] if spot == 1
-        end
-     end
+      end
+    end
   end
 
   def dead_or_alive(row_index, spot_index, spot)
-    if neighb_tally[row_index][spot_index] == 3
-      alive([row_index, spot_index])
-    elsif spot == 1 && neighb_tally[row_index][spot_index] == 2
+    if alive_conditions(row_index, spot_index, spot)
       alive([row_index, spot_index])
     else
       dead([row_index, spot_index])
     end
+  end
+
+  def alive_conditions(row_index, spot_index, spot)
+    neighb_tally[row_index][spot_index] == 3 ||
+      (spot == 1 && neighb_tally[row_index][spot_index] == 2)
   end
 end

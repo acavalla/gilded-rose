@@ -38,6 +38,17 @@ describe Board do
       subject.tick
       expect(subject.layout).to eq [[1, 1], [1, 1]]
     end
+
+    it 'kills cells with 4 or more neighbours' do
+      subject = described_class.new(3)
+      subject.alive([0, 1])
+      subject.alive([1, 0])
+      subject.alive([1, 1])
+      subject.alive([1, 2])
+      subject.alive([2, 1])
+      subject.tick
+      expect(subject.layout).to eq [[1, 1, 1], [1, 0, 1], [1, 1, 1]]
+    end
   end
 
   describe '.neighbours' do
