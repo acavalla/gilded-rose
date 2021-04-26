@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+# Can I remove the board from this? Just have live cells and their locations
+# and dead cells which are non_alive cells?
 class Board
-  attr_reader :layout, :neighb_tally, :dims, :live
+  attr_reader :dims, :live, :neighb_tally_locs
+
 
   DEF_DIMS = 2
   NEIGHB_LOC = [[-1, -1], [-1, 0], [-1, 1],
@@ -10,15 +13,15 @@ class Board
 
   def initialize(dims = DEF_DIMS)
     @dims = dims
-    @layout = new_array(dims)
+    @live = []
   end
 
   def alive(location)
-    @layout[location[0]][location[1]] = 1
+    live << [location[0], location[1]]
   end
 
   def dead(location)
-    @layout[location[0]][location[1]] = 0
+    live.delete([location[0], location[1]])
   end
 
   def tick
@@ -28,7 +31,7 @@ class Board
 
   def neighbours
     @neighb_tally = new_array(dims)
-    live_cells
+    @neighb_tally_locs = []
     live.each do |loc|
       label_neighbours(loc)
     end
@@ -38,57 +41,24 @@ class Board
 
   def label_neighbours(loc)
     NEIGHB_LOC.each do |nloc|
-      add_one(loc[0] + nloc[0], loc[1] + nloc[1]) unless out_of_bounds(loc, nloc)
+      current_spot = [loc[0]+nloc[0], loc[1] + nloc[1]]
+      if @neighb_tally_locs.any? {|h| h[:location] == current_spot}
+        @neighb_tally_locs.select{|key, value| key[:location] == current_spot}[0][:tally] += 1
+      else
+        @neighb_tally_locs << {:location => current_spot,
+                              :tally => 1,
+                              :status => live.include?([loc[0]+nloc[0], loc[1] + nloc[1]]) ? 1 : 0}
+      end
     end
-  end
-
-  def out_of_bounds(loc, nloc)
-    top_left(loc, nloc) || bottom_right(loc, nloc)
-  end
-
-  def top_left(loc, nloc)
-    (loc[0] + nloc[0]).negative? || (loc[1] + nloc[1]).negative?
-  end
-
-  def bottom_right(loc, nloc)
-    loc[0] + nloc[0] > dims - 1 || loc[1] + nloc[1] > dims - 1
   end
 
   def new_array(dims)
     Array.new(dims) { Array.new(dims, 0) }
   end
 
-  def add_one(row_index, spot_index)
-    @neighb_tally[row_index][spot_index] += 1
-  end
-
   def new_layout
-    layout.each_with_index.map do |row, row_index|
-      row.each_with_index.map do |spot, spot_index|
-        dead_or_alive(row_index, spot_index, spot)
-      end
-    end
-  end
-
-  def live_cells
     @live = []
-    layout.each_with_index.map do |row, row_index|
-      row.each_with_index.map do |spot, spot_index|
-        live << [row_index, spot_index] if spot == 1
-      end
-    end
-  end
-
-  def dead_or_alive(row_index, spot_index, spot)
-    if conditions_for_life(row_index, spot_index, spot)
-      alive([row_index, spot_index])
-    else
-      dead([row_index, spot_index])
-    end
-  end
-
-  def conditions_for_life(row_index, spot_index, spot)
-    neighb_tally[row_index][spot_index] == 3 ||
-      (spot == 1 && neighb_tally[row_index][spot_index] == 2)
+    @neighb_tally_locs.select{|key, value| key[:tally] == 3 }.each { |key| live << key[:location]}
+    @neighb_tally_locs.select{|key, value| key[:tally] == 2 && key[:status] == 1 }.each { |key| live << key[:location]}
   end
 end

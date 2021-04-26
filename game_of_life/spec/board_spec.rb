@@ -3,30 +3,29 @@
 require 'board'
 
 describe Board do
-  empty_2_board = [[0, 0], [0, 0]]
-  empty_3_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-  it 'initializes with a 2x2 board' do
-    expect(subject.layout).to eq empty_2_board
-  end
-
-  it 'can be specified differently' do
-    subject = described_class.new(3)
-    expect(subject.layout).to eq empty_3_board
-  end
+  # empty_2_board = [[0, 0], [0, 0]]
+  # empty_3_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+  # it 'initializes with a 2x2 board' do
+  #   expect(subject.layout).to eq empty_2_board
+  # end
+  #
+  # it 'can be specified differently' do
+  #   subject = described_class.new(3)
+  #   expect(subject.layout).to eq empty_3_board
+  # end
 
   describe '.alive' do
-    it 'cells can be set to 1' do
+    it 'saves live cells in an array' do
       subject.alive([1, 1])
-      one_cell_board = [[0, 0], [0, 1]]
-      expect(subject.layout).to eq one_cell_board
+      expect(subject.live).to include [1,1]
     end
   end
 
   describe '.dead' do
-    it 'cells can be set back to 0' do
+    it 'removes cells from live array' do
       subject.alive([1, 1])
       subject.dead([1, 1])
-      expect(subject.layout).to eq empty_2_board
+      expect(subject.live).not_to include [1,1]
     end
   end
 
@@ -37,31 +36,30 @@ describe Board do
 
     it 'live cells with no live neighbours die' do
       subject.tick
-      expect(subject.layout).to eq [[0, 0], [0, 0]]
+      expect(subject.live).to eq []
     end
 
     it 'live cells with one live neighbour die' do
       subject.alive([0, 0])
       subject.tick
-      expect(subject.layout).to eq [[0, 0], [0, 0]]
+      expect(subject.live).to eq []
     end
 
     it 'cells with 2 neighbours live; dead cells with 3 neighbours are born' do
       subject.alive([0, 0])
       subject.alive([1, 0])
       subject.tick
-      expect(subject.layout).to eq [[1, 1], [1, 1]]
+      expect(subject.live.length).to eq 4
     end
 
     it 'kills cells with 4 neighbours' do
-      subject = described_class.new(3)
       subject.alive([0, 1])
       subject.alive([1, 0])
       subject.alive([1, 1])
       subject.alive([1, 2])
       subject.alive([2, 1])
       subject.tick
-      expect(subject.layout).to eq [[1, 1, 1], [1, 0, 1], [1, 1, 1]]
+      expect(subject.live).not_to include [0,0]
     end
   end
 
@@ -69,7 +67,15 @@ describe Board do
     it 'tallies living neighbours' do
       subject.alive([1, 1])
       subject.neighbours
-      expect(subject.neighb_tally).to eq [[1, 1], [1, 0]]
+      neighbs = [{:location=>[0, 0], :tally=>1, :status=>0},
+                 {:location=>[0, 1], :tally=>1, :status=>0},
+                 {:location=>[0, 2], :tally=>1, :status=>0},
+                 {:location=>[1, 0], :tally=>1, :status=>0},
+                 {:location=>[1, 2], :tally=>1, :status=>0},
+                 {:location=>[2, 0], :tally=>1, :status=>0},
+                 {:location=>[2, 1], :tally=>1, :status=>0},
+                 {:location=>[2, 2], :tally=>1, :status=>0}]
+      expect(subject.neighb_tally_locs).to eq neighbs
     end
   end
 end
