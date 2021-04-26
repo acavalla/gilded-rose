@@ -3,17 +3,6 @@
 require 'board'
 
 describe Board do
-  # empty_2_board = [[0, 0], [0, 0]]
-  # empty_3_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-  # it 'initializes with a 2x2 board' do
-  #   expect(subject.layout).to eq empty_2_board
-  # end
-  #
-  # it 'can be specified differently' do
-  #   subject = described_class.new(3)
-  #   expect(subject.layout).to eq empty_3_board
-  # end
-
   describe '.alive' do
     it 'saves live cells in an array' do
       subject.alive([1, 1])
