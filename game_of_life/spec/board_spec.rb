@@ -26,20 +26,27 @@ describe Board do
   describe '.tick' do
     before do
       subject.alive([0, 1])
+    end
+
+    it 'live cells with no live neighbours die' do
+      subject.tick
+      expect(subject.layout).to eq [[0, 0], [0, 0]]
+    end
+
+    it 'live cells with one live neighbour die' do
+      subject.alive([0, 0])
+      subject.tick
+      expect(subject.layout).to eq [[0, 0], [0, 0]]
+    end
+
+    it 'cells with 2 neighbours live; dead cells with 3 neighbours are born' do
+      subject.alive([0, 0])
       subject.alive([1, 0])
-      subject.alive([1, 1])
-      subject.tick
-    end
-    it 'updates layout based on neighbours' do
-      expect(subject.layout).to eq [[1, 1], [1, 1]]
-    end
-
-    it 'updates layout based on neighbours' do
       subject.tick
       expect(subject.layout).to eq [[1, 1], [1, 1]]
     end
 
-    it 'kills cells with 4 or more neighbours' do
+    it 'kills cells with 4 neighbours' do
       subject = described_class.new(3)
       subject.alive([0, 1])
       subject.alive([1, 0])
