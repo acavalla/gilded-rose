@@ -6,7 +6,7 @@ describe Board do
   describe '.alive' do
     it 'saves live cells in an array' do
       subject.alive([1, 1])
-      expect(subject.live).to include [1,1]
+      expect(subject.live).to include [1, 1]
     end
   end
 
@@ -14,7 +14,7 @@ describe Board do
     it 'removes cells from live array' do
       subject.alive([1, 1])
       subject.dead([1, 1])
-      expect(subject.live).not_to include [1,1]
+      expect(subject.live).not_to include [1, 1]
     end
   end
 
@@ -48,7 +48,7 @@ describe Board do
       subject.alive([1, 2])
       subject.alive([2, 1])
       subject.tick
-      expect(subject.live).not_to include [0,0]
+      expect(subject.live).not_to include [0, 0]
     end
   end
 
@@ -56,14 +56,14 @@ describe Board do
     it 'tallies living neighbours' do
       subject.alive([1, 1])
       subject.neighbours
-      neighbs = [{:location=>[0, 0], :tally=>1, :status=>0},
-                 {:location=>[0, 1], :tally=>1, :status=>0},
-                 {:location=>[0, 2], :tally=>1, :status=>0},
-                 {:location=>[1, 0], :tally=>1, :status=>0},
-                 {:location=>[1, 2], :tally=>1, :status=>0},
-                 {:location=>[2, 0], :tally=>1, :status=>0},
-                 {:location=>[2, 1], :tally=>1, :status=>0},
-                 {:location=>[2, 2], :tally=>1, :status=>0}]
+      neighbs = [{ location: [0, 0], tally: 1, status: 0 },
+                 { location: [0, 1], tally: 1, status: 0 },
+                 { location: [0, 2], tally: 1, status: 0 },
+                 { location: [1, 0], tally: 1, status: 0 },
+                 { location: [1, 2], tally: 1, status: 0 },
+                 { location: [2, 0], tally: 1, status: 0 },
+                 { location: [2, 1], tally: 1, status: 0 },
+                 { location: [2, 2], tally: 1, status: 0 }]
       expect(subject.neighb_tally_locs).to eq neighbs
     end
   end

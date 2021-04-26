@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-# Can I remove the board from this? Just have live cells and their locations
-# and dead cells which are non_alive cells?
+# Keeps track of and updates live cells
+
 class Board
   attr_reader :dims, :live, :neighb_tally_locs
-
 
   DEF_DIMS = 2
   NEIGHB_LOC = [[-1, -1], [-1, 0], [-1, 1],
@@ -41,13 +40,13 @@ class Board
 
   def label_neighbours(loc)
     NEIGHB_LOC.each do |nloc|
-      current_spot = [loc[0]+nloc[0], loc[1] + nloc[1]]
-      if @neighb_tally_locs.any? {|h| h[:location] == current_spot}
-        @neighb_tally_locs.select{|key, value| key[:location] == current_spot}[0][:tally] += 1
+      current_spot = [loc[0] + nloc[0], loc[1] + nloc[1]]
+      if @neighb_tally_locs.any? { |h| h[:location] == current_spot }
+        @neighb_tally_locs.select { |key, _value| key[:location] == current_spot }[0][:tally] += 1
       else
-        @neighb_tally_locs << {:location => current_spot,
-                              :tally => 1,
-                              :status => live.include?([loc[0]+nloc[0], loc[1] + nloc[1]]) ? 1 : 0}
+        @neighb_tally_locs << { location: current_spot,
+                                tally: 1,
+                                status: live.include?([loc[0] + nloc[0], loc[1] + nloc[1]]) ? 1 : 0 }
       end
     end
   end
@@ -58,7 +57,7 @@ class Board
 
   def new_layout
     @live = []
-    @neighb_tally_locs.select{|key, value| key[:tally] == 3 }.each { |key| live << key[:location]}
-    @neighb_tally_locs.select{|key, value| key[:tally] == 2 && key[:status] == 1 }.each { |key| live << key[:location]}
+    @neighb_tally_locs.select { |key, _value| key[:tally] == 3 }.each { |key| live << key[:location] }
+    @neighb_tally_locs.select { |key, _value| key[:tally] == 2 && key[:status] == 1 }.each { |key| live << key[:location] }
   end
 end
