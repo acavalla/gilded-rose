@@ -64,7 +64,7 @@ describe Board do
                  { location: [2, 0], tally: 1, status: 0 },
                  { location: [2, 1], tally: 1, status: 0 },
                  { location: [2, 2], tally: 1, status: 0 }]
-      expect(subject.neighb_tally_locs).to eq neighbs
+      expect(subject.neighb_tally).to eq neighbs
     end
   end
 end
