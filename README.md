@@ -1,7 +1,14 @@
-======================================
+![language-ruby](https://img.shields.io/badge/language-ruby-red) ![version-2.7.2](https://img.shields.io/badge/version-2.7.2-yellow) ![coverage-score](https://img.shields.io/badge/coverage-99.31%-blue) ![build](https://img.shields.io/badge/build-passing-brightgreen)
 # Gilded Rose
 
 [specifications](https://github.com/makersacademy/course/blob/master/individual_challenges/gilded_rose.md)
+
+## How to run
+
+1. Clone this repo: `git clone https://github.com/acavalla/gilded-rose.git`
+2. To run the test suite, run `rspec`
+3. Open the Ruby REPL `irb -r runfile.rb`. Please see below for demo of functionality.
+
 
 This is my submission for the Gilded Rose tech test. You can see my planning in the planning markdown document. I started by listing all the issues I could initially see in the legacy code, however small, to remind me to come back to them if necessary. I diagrammed the domain by listing the classes and their attributes and methods, and diagrammed general inputs and outputs and conditions in a table. I then wrote a bit of pseudocode to get a feel for the overall structure of the update_quality method. I pulled out lots of bits of repeated code into small methods, eg to check min/max, to increase or reduce quality. I used `2.times { reduce_qual }` instead of `reduce_qual(-2)` to avoid an edge case of an item going from quality 1 to -1 and thereby 'skipping' fulfilling the `min?(item)` query.
 
