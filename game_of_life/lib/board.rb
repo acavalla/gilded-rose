@@ -28,14 +28,14 @@ class Board
     update_live
   end
 
+  private
+
   def count_neighbours
     @neighb_tally = []
     live.each do |loc|
       label_neighbours(loc)
     end
   end
-
-  private
 
   def label_neighbours(loc)
     NEIGHBOURS.each do |nloc|

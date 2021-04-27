@@ -18,22 +18,6 @@ describe Board do
     end
   end
 
-  describe '.neighbours' do
-    it 'tallies living neighbours' do
-      subject.alive([1, 1])
-      subject.count_neighbours
-      neighbs = [{ location: [0, 0], tally: 1, status: 0 },
-                 { location: [0, 1], tally: 1, status: 0 },
-                 { location: [0, 2], tally: 1, status: 0 },
-                 { location: [1, 0], tally: 1, status: 0 },
-                 { location: [1, 2], tally: 1, status: 0 },
-                 { location: [2, 0], tally: 1, status: 0 },
-                 { location: [2, 1], tally: 1, status: 0 },
-                 { location: [2, 2], tally: 1, status: 0 }]
-      expect(subject.neighb_tally).to eq neighbs
-    end
-  end
-
   describe '.tick' do
     before do
       subject.alive([0, 1])
